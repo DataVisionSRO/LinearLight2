@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearLight2", "LinearLight2\LinearLight2.csproj", "{5163A74B-7B25-436B-8F32-65482C4CBE63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearLight2Test", "LinearLight2Test\LinearLight2Test.csproj", "{AE04172C-D642-4829-B49A-32A114477E34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5163A74B-7B25-436B-8F32-65482C4CBE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5163A74B-7B25-436B-8F32-65482C4CBE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5163A74B-7B25-436B-8F32-65482C4CBE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5163A74B-7B25-436B-8F32-65482C4CBE63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE04172C-D642-4829-B49A-32A114477E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE04172C-D642-4829-B49A-32A114477E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE04172C-D642-4829-B49A-32A114477E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE04172C-D642-4829-B49A-32A114477E34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11A9D289-F10C-47ED-A75E-5CB406DF5928}
+	EndGlobalSection
+EndGlobal
