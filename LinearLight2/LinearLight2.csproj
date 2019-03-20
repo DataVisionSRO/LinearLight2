@@ -19,5 +19,7 @@
     <WarningsAsErrors />
     <DebugType>full</DebugType>
   </PropertyGroup>
-  
+  <ItemGroup>
+    <PackageReference Include="NModbus" Version="3.0.58" />
+  </ItemGroup>
 </Project>

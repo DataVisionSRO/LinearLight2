@@ -1,12 +1,13 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace LinearLight2Test
 {
     [TestFixture]
-    public class UnitTest1
+    class Dummy
     {
+
         [Test]
-        public void TestMethod1()
+        public void DummyTest()
         {
             Assert.Pass();
         }
