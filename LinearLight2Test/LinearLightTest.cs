@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Linq;
 using LinearLight2;
 using NModbus.IO;
 using NUnit.Framework;
@@ -10,11 +11,13 @@ namespace LinearLight2Test
     [Explicit("Tests require connection to light and manual usage")]
     public class LinearLightTest
     {
+        private string comport = "COM28";
+
         [Test]
         public void ReadTemperatureRegisters()
         {
-            var resource = new Communicator("COM29");
-            var lili = new LinearLight(resource);
+            var resource = new Communicator(comport);
+            var lili = new LinearLight(resource,3);
             foreach (var liliTemperature in lili.Temperatures)
             {
                 Console.Out.WriteLine("temperature is " + liliTemperature);
@@ -26,12 +29,13 @@ namespace LinearLight2Test
         [TestCase(1000)]
         public void WriteAndReadHoldingRegister(int number)
         {
-            using (var streamResource = new Communicator("COM29"))
-            {
-                var lili = new LinearLight(streamResource);
-
+            using (var streamResource = new Communicator(comport))
+            {   
+                   
+                var lili = new LinearLight(streamResource,3);
+                 
                 lili.Intensity = number;
-                Assert.AreEqual(number, lili.Intensity);
+                CollectionAssert.AreEqual(Enumerable.Repeat(number,3), lili.Intensities);
             }
         }
     }
