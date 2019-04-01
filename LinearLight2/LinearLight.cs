@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using LinearLight2.NModbusExtension;
-using NModbus;
 using NModbus.IO;
 
 namespace LinearLight2
@@ -11,31 +9,31 @@ namespace LinearLight2
     public class LinearLight
     {
 
-        private readonly IModbusSerialMaster modbusSerialMaster;
+        private readonly IModbusMaster modbusMaster;
         private ushort HoldingRegister = 4000 - 1;
         private readonly int segmentCount;
         private const byte SlaveAddress = 0x01;
         private const int MillisecondsDelayBetweenTransmits = 70;
 
+        [Obsolete("Reference to NModbus will be removed in next commit.")]
         public LinearLight(IStreamResource streamResource,int segmentCount)
         {
-            var modbusFactory = new ModbusFactory();
             this.segmentCount = segmentCount;
-            
-            modbusSerialMaster = modbusFactory.CreateRtuMaster(streamResource);
-            modbusSerialMaster.Transport.WriteTimeout = 200;
-            modbusSerialMaster.Transport.ReadTimeout = 200;
-            modbusSerialMaster.Transport.Retries = 3;
+            modbusMaster = new ModbusRtuMaster(streamResource);
         }
 
-        public List<int> Temperatures => throw new NotImplementedException();
-
+        public LinearLight(IModbusMaster master, int segmentCount)
+        {
+            this.segmentCount = segmentCount;
+            modbusMaster = master;
+        }
+        
         public int Intensity
         {
             set
             {
                 Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                modbusSerialMaster.BroadcastWriteSingleRegister(HoldingRegister, (ushort) value);
+                modbusMaster.BroadcastWriteSingleRegister(HoldingRegister, (ushort) value);
             }
         }
 
@@ -46,9 +44,11 @@ namespace LinearLight2
                 foreach (var index in Enumerable.Range(SlaveAddress, segmentCount))
                 {
                     Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                    yield return modbusSerialMaster.ReadHoldingRegisters((byte) index, HoldingRegister, 1)[0];
+                    yield return modbusMaster.ReadHoldingRegisters((byte) index, HoldingRegister, 1)[0];
                 }
             }
         }
+
+        public int[] Temperatures => throw new NotImplementedException();
     }
 }

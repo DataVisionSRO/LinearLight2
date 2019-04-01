@@ -1,4 +1,3 @@
-﻿using System;
 using System.Linq;
 using LinearLight2;
 using NUnit.Framework;
@@ -6,35 +5,31 @@ using NUnit.Framework;
 namespace LinearLight2Test
 {
     [TestFixture]
-    [Explicit("Tests require connection to light and manual usage")]
     public class LinearLightTest
     {
-        private string comport = "COM28";
+        [Test]
+        public void SetIntensityTest()
+        {
+            ushort expectedIntensity = 15;
+            var master = new DummyBroadcastWriteModbusMaster(4000-1, expectedIntensity);
+            var linearLight = new LinearLight(master, 0);
+            linearLight.Intensity = expectedIntensity;
+        }
 
         [Test]
-        public void ReadTemperatureRegisters()
+        public void ReadIntensitiesTest()
         {
-            var resource = new Communicator(comport);
-            var lili = new LinearLight(resource,3);
-            foreach (var liliTemperature in lili.Temperatures)
-            {
-                Console.Out.WriteLine("temperature is " + liliTemperature);
-            }
+            var addresses = new byte[] {1, 2, 3};
+            var startAddresses = new ushort[] {4000 - 1, 4000 - 1, 4000 - 1,};
+            var lengths = new ushort[] {1, 1, 1};
+            var intensities = new ushort[] {30, 54, 15};
+            var returnVals = intensities.Select(x => new[] {x}).ToArray();
+
+            var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
+            var lili = new LinearLight(master,addresses.Length);
+            CollectionAssert.AreEqual(intensities, lili.Intensities);
         }
 
-        [TestCase(10)]
-        [TestCase(100)]
-        [TestCase(1000)]
-        public void WriteAndReadHoldingRegister(int number)
-        {
-            using (var streamResource = new Communicator(comport))
-            {   
-                   
-                var lili = new LinearLight(streamResource,3);
-                 
-                lili.Intensity = number;
-                CollectionAssert.AreEqual(Enumerable.Repeat(number,3), lili.Intensities);
-            }
-        }
+        
     }
 }
