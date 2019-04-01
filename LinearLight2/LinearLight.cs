@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using NModbus.IO;
 
 namespace LinearLight2
 {
@@ -14,14 +13,7 @@ namespace LinearLight2
         private readonly int segmentCount;
         private const byte SlaveAddress = 0x01;
         private const int MillisecondsDelayBetweenTransmits = 70;
-
-        [Obsolete("Reference to NModbus will be removed in next commit.")]
-        public LinearLight(IStreamResource streamResource,int segmentCount)
-        {
-            this.segmentCount = segmentCount;
-            modbusMaster = new ModbusRtuMaster(streamResource);
-        }
-
+        
         public LinearLight(IModbusMaster master, int segmentCount)
         {
             this.segmentCount = segmentCount;

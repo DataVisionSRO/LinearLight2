@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearLight2", "LinearLight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearLight2Test", "LinearLight2Test\LinearLight2Test.csproj", "{AE04172C-D642-4829-B49A-32A114477E34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearLight2.NModbus", "LinearLight2.NModbus\LinearLight2.NModbus.csproj", "{7541EBE4-D981-4DAA-8D8E-BBE42E067D90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AE04172C-D642-4829-B49A-32A114477E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE04172C-D642-4829-B49A-32A114477E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE04172C-D642-4829-B49A-32A114477E34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7541EBE4-D981-4DAA-8D8E-BBE42E067D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7541EBE4-D981-4DAA-8D8E-BBE42E067D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7541EBE4-D981-4DAA-8D8E-BBE42E067D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7541EBE4-D981-4DAA-8D8E-BBE42E067D90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

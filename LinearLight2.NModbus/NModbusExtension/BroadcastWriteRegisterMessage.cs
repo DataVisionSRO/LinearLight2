@@ -5,9 +5,9 @@ using System.Net;
 using NModbus;
 using NModbus.Data;
 
-namespace LinearLight2.NModbusExtension
+namespace LinearLight2.NModbus.NModbusExtension
 {
-    internal class BroadcastWriteRegisterMessage : IModbusMessage
+    public class BroadcastWriteRegisterMessage : IModbusMessage
     {
         private readonly ushort? startAddress;
         private readonly IModbusMessageDataCollection data;

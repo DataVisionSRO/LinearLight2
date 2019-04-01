@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
     <VersionPrefix>0.0.1</VersionPrefix>
     <VersionSuffix>SNAPSHOT</VersionSuffix>
     <Authors>DataVision</Authors>
@@ -9,14 +9,22 @@
     <Copyright>DataVision</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <DebugType>full</DebugType>
-  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NModbus" Version="3.0.58" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LinearLight2\LinearLight2.csproj" />
+  </ItemGroup>
+
 </Project>

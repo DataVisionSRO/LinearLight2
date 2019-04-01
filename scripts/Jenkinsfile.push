@@ -28,6 +28,8 @@ pipeline {
             steps {
                 bat 'dotnet pack LinearLight2/LinearLight2.csproj --configuration Release --include-source --version-suffix SNAPSHOT-%GERRIT_CHANGE_NUMBER%-%GERRIT_PATCHSET_NUMBER%'
                 bat 'dotnet nuget push LinearLight2\\bin\\Release\\LinearLight2*SNAPSHOT*symbols.nupkg --source NetSnapshots'
+                bat 'dotnet pack LinearLight2.NModbus/LinearLight2.NModbus.csproj --configuration Release --include-source --version-suffix SNAPSHOT-%GERRIT_CHANGE_NUMBER%-%GERRIT_PATCHSET_NUMBER%'
+                bat 'dotnet nuget push LinearLight2.NModbus\\bin\\Release\\LinearLight2.NModbus*SNAPSHOT*symbols.nupkg --source NetSnapshots'
             }
         }
         stage('analyse') {

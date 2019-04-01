@@ -3,9 +3,9 @@ using System.IO;
 using System.Net;
 using NModbus.Data;
 
-namespace LinearLight2.NModbusExtension
+namespace LinearLight2.NModbus.NModbusExtension
 {
-    internal class SingleModbusRegister : IModbusMessageDataCollection
+    public class SingleModbusRegister : IModbusMessageDataCollection
     {
         private readonly ushort value;
 

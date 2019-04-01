@@ -1,12 +1,12 @@
-﻿using LinearLight2.NModbusExtension;
+﻿using LinearLight2.NModbus.NModbusExtension;
 using NModbus;
 using NModbus.IO;
 
-namespace LinearLight2
+namespace LinearLight2.NModbus
 {
     public class ModbusRtuMaster:IModbusMaster
     {
-        private NModbus.IModbusMaster master;
+        private global::NModbus.IModbusMaster master;
         public ModbusRtuMaster(IStreamResource streamResource)
         {
             var modbusFactory = new ModbusFactory();
