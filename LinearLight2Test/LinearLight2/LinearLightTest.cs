@@ -2,7 +2,7 @@ using System.Linq;
 using LinearLight2;
 using NUnit.Framework;
 
-namespace LinearLight2Test
+namespace LinearLight2Test.LinearLight2
 {
     [TestFixture]
     public class LinearLightTest
