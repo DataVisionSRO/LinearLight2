@@ -20,7 +20,7 @@ namespace LinearLight2Test.LinearLight2
                 var lili = new LinearLight(master, 1);
                 lili.Intensity = 0; 
                 Thread.Sleep(500); 
-                Console.Out.WriteLine(string.Join(", ",lili.Intensities.Select(x=>x.ToString())));
+                Console.Out.WriteLine(string.Join(", ",lili.SetIntensities1.Select(x=>x.ToString())));
             }
         }
     }
