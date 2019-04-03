@@ -11,7 +11,7 @@ namespace LinearLight2
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
         private readonly int segmentCount;
-        private const byte SlaveAddress = 0x01;
+        private const byte SlaveBaseAddress = 0x01;
         private const int MillisecondsDelayBetweenTransmits = 70;
         
         public LinearLight(IModbusMaster master, int segmentCount)
@@ -37,7 +37,7 @@ namespace LinearLight2
 
         private IEnumerable<int> ReadHoldingRegisterFromSegments(ushort address)
         {
-            foreach (var index in Enumerable.Range(SlaveAddress, segmentCount))
+            foreach (var index in Enumerable.Range(SlaveBaseAddress, segmentCount))
             {
                 Thread.Sleep(MillisecondsDelayBetweenTransmits);
                 yield return modbusMaster.ReadHoldingRegisters((byte) index, address, 1)[0];
