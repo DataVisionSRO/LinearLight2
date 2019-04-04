@@ -12,6 +12,7 @@ namespace LinearLight2
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
         private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
+        private readonly ushort swTriggerCoil = 1000 - 1;
         private readonly ushort fanEnableCoil = 1001 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
@@ -40,6 +41,15 @@ namespace LinearLight2
             {
                 Thread.Sleep(MillisecondsDelayBetweenTransmits);
                 modbusMaster.BroadcastWriteSingleRegister(fanSpeedHoldingRegister, (ushort) value);
+            }
+        }
+
+        public bool SwTrigger
+        {
+            set
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                modbusMaster.BroadcastWriteSingleCoil(swTriggerCoil, value);
             }
         }
 

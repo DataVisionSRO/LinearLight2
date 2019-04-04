@@ -75,6 +75,15 @@ namespace LinearLight2Test.LinearLight2
             lili.FanEnable = value;
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SetSwTriggerTest(bool value)
+        {
+            var master = new DummyBroadcastWriteCoilModbusMaster(new ushort[] { 1000 - 1 }, new[] { value });
+            var lili = new LinearLight(master, 0);
+            lili.SwTrigger = value;
+        }
+
 
     }
 }
