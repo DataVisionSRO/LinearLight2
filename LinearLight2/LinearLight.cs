@@ -11,6 +11,7 @@ namespace LinearLight2
         private readonly IModbusMaster modbusMaster;
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
+        private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
         private readonly ushort fanEnableCoil = 1001 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
@@ -33,9 +34,22 @@ namespace LinearLight2
             }
         }
 
+        public int FanSpeed
+        {
+            set
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                modbusMaster.BroadcastWriteSingleRegister(fanSpeedHoldingRegister, (ushort) value);
+            }
+        }
+
         public bool FanEnable
         {
-            set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
+            set
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
+            }
         }
 
         public IEnumerable<bool> FanEnables

@@ -17,6 +17,15 @@ namespace LinearLight2Test.LinearLight2
         }
 
         [Test]
+        public void SetFanSpeedTest()
+        {
+            ushort setSpeed = 50;
+            var master = new DummyBroadcastWriteModbusMaster(new ushort[] { 4002 - 1 }, new[] { setSpeed});
+            var linearLight = new LinearLight(master, 0);
+            linearLight.FanSpeed = setSpeed;
+        }
+
+        [Test]
         public void ReadIntensities1Test()
         {
             var addresses = new byte[] {1, 2, 3};
