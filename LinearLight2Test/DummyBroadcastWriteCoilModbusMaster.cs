@@ -4,24 +4,20 @@ using NUnit.Framework;
 
 namespace LinearLight2Test
 {
-    internal class DummyBroadcastWriteModbusMaster : IModbusMaster
+    internal class DummyBroadcastWriteCoilModbusMaster : IModbusMaster
     {
         private readonly ushort[] setRegister;
-        private readonly ushort[] expectedIntensity;
+        private readonly bool[] values;
         private int i;
 
-        public DummyBroadcastWriteModbusMaster(ushort[] setRegister, ushort[] expectedIntensity)
+        public DummyBroadcastWriteCoilModbusMaster(ushort[] setRegister, bool[] values)
         {
             this.setRegister = setRegister;
-            this.expectedIntensity = expectedIntensity;
+            this.values = values;
         }
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
-            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(expectedIntensity[i], value);
-                                Assert.AreEqual(setRegister[i++], registerAddress);
-                            });
+            throw new NotImplementedException();
         }
 
         public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
@@ -36,7 +32,12 @@ namespace LinearLight2Test
 
         public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)
         {
-            throw new NotImplementedException();
+            Assert.Multiple(() =>
+                            {
+                                Assert.AreEqual(values[i], value);
+                                Assert.AreEqual(setRegister[i++], coilAddress);
+                            });
+
         }
     }
 }

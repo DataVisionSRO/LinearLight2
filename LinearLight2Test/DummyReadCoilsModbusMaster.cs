@@ -4,16 +4,16 @@ using NUnit.Framework;
 
 namespace LinearLight2Test
 {
-    internal class DummyReadRegistersModbusMaster : IModbusMaster
+    internal class DummyReadCoilsModbusMaster : IModbusMaster
     {
         private readonly byte[] expectedSlaveAddresses;
         private readonly ushort[] expectedStartAddresses;
         private readonly ushort[] expectedLengths;
-        private readonly ushort[][] returnValues;
+        private readonly bool[][] returnValues;
         private int i;
 
-        public DummyReadRegistersModbusMaster(byte[] expectedSlaveAddresses, ushort[] expectedStartAddresses,
-                                              ushort[] expectedLengths, ushort[][] returnValues)
+        public DummyReadCoilsModbusMaster(byte[] expectedSlaveAddresses, ushort[] expectedStartAddresses,
+                                              ushort[] expectedLengths, bool[][] returnValues)
         {
             this.expectedSlaveAddresses = expectedSlaveAddresses;
             this.expectedStartAddresses = expectedStartAddresses;
@@ -27,18 +27,18 @@ namespace LinearLight2Test
 
         public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(expectedSlaveAddresses[i], slaveAddress);
-                                Assert.AreEqual(expectedStartAddresses[i], startAddress);
-                                Assert.AreEqual(expectedLengths[i],numberOfPoints);
-                            });
-            return returnValues[i++];
+            throw new NotImplementedException();
         }
 
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            throw new NotImplementedException();
+            Assert.Multiple(() =>
+                            {
+                                Assert.AreEqual(expectedSlaveAddresses[i], slaveAddress);
+                                Assert.AreEqual(expectedStartAddresses[i], startAddress);
+                                Assert.AreEqual(expectedLengths[i], numberOfPoints);
+                            });
+            return returnValues[i++]; 
         }
 
         public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)

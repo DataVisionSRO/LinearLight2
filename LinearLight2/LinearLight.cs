@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -10,6 +11,7 @@ namespace LinearLight2
         private readonly IModbusMaster modbusMaster;
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
+        private readonly ushort fanEnableCoil = 1001 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
         private const int MillisecondsDelayBetweenTransmits = 70;
@@ -28,6 +30,24 @@ namespace LinearLight2
                 modbusMaster.BroadcastWriteSingleRegister(setIntensity1HoldingRegister, (ushort) value);
                 Thread.Sleep(MillisecondsDelayBetweenTransmits);
                 modbusMaster.BroadcastWriteSingleRegister(setIntensity2HoldingRegister, (ushort) value);
+            }
+        }
+
+        public bool FanEnable
+        {
+            set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
+        }
+
+        public IEnumerable<bool> FanEnables
+        {
+            get => ReadCoils(fanEnableCoil);
+        }
+
+        private IEnumerable<bool> ReadCoils(ushort address)
+        {
+            foreach (var index in Enumerable.Range(SlaveBaseAddress,segmentCount))
+            {
+                yield return modbusMaster.ReadCoils((byte) index, address, 1)[0];
             }
         }
 

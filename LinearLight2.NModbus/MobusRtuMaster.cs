@@ -25,5 +25,15 @@ namespace LinearLight2.NModbus
         {
             return master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
         }
+
+        public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            return master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+        }
+
+        public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)
+        {
+            master.BroadcastWriteSingleCoil(coilAddress, value);
+        }
     }
 }

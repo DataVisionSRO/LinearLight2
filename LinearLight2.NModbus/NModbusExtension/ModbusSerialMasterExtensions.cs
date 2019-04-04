@@ -6,5 +6,10 @@
         {
             master.Transport.Write(new BroadcastWriteRegisterMessage(addr, value));
         }
+
+        public static void BroadcastWriteSingleCoil(this global::NModbus.IModbusMaster master, ushort addr, bool value)
+        {
+            master.Transport.Write(new BroadcastWriteCoilMessage(addr, value));
+        }
     }
 }

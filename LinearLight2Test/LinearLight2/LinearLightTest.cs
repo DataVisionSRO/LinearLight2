@@ -43,6 +43,29 @@ namespace LinearLight2Test.LinearLight2
             CollectionAssert.AreEqual(intensities, lili.SetIntensities2);
         }
 
+        [Test]
+        public void ReadFanEnablesTest()
+        {
+            var addresses = new byte[] {1, 2, 3};
+            var startAddresses = new ushort[] { 1001 - 1, 1001 - 1, 1001 - 1, };
+            var lengths = new ushort[] { 1, 1, 1 };
+            var values = new[] { false, false, true };
+            var returnVals = values.Select(x => new[] { x }).ToArray();
+
+            var master = new DummyReadCoilsModbusMaster(addresses, startAddresses, lengths, returnVals);
+            var lili = new LinearLight(master, addresses.Length);
+            CollectionAssert.AreEqual(values,lili.FanEnables);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SetFanEnableTest(bool value)
+        {
+            var master = new DummyBroadcastWriteCoilModbusMaster(new ushort[] {1001 - 1}, new[] {value});
+            var lili = new LinearLight(master, 0);
+            lili.FanEnable = value;
+        }
+
 
     }
 }
