@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace LinearLight2Test
 {
-    internal class DummyReadRegistersModbusMaster : IModbusMaster
+    internal class DummyReadInputRegistersModbusMaster : IModbusMaster
     {
         private readonly byte[] expectedSlaveAddresses;
         private readonly ushort[] expectedStartAddresses;
@@ -12,7 +12,7 @@ namespace LinearLight2Test
         private readonly ushort[][] returnValues;
         private int i;
 
-        public DummyReadRegistersModbusMaster(byte[] expectedSlaveAddresses, ushort[] expectedStartAddresses,
+        public DummyReadInputRegistersModbusMaster(byte[] expectedSlaveAddresses, ushort[] expectedStartAddresses,
                                               ushort[] expectedLengths, ushort[][] returnValues)
         {
             this.expectedSlaveAddresses = expectedSlaveAddresses;
@@ -27,18 +27,18 @@ namespace LinearLight2Test
 
         public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(expectedSlaveAddresses[i], slaveAddress);
-                                Assert.AreEqual(expectedStartAddresses[i], startAddress);
-                                Assert.AreEqual(expectedLengths[i],numberOfPoints);
-                            });
-            return returnValues[i++];
+            throw new NotImplementedException();
         }
 
         public ushort[] ReadInputRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            throw new NotImplementedException();
+            Assert.Multiple(() =>
+                            {
+                                Assert.AreEqual(expectedSlaveAddresses[i], slaveAddress);
+                                Assert.AreEqual(expectedStartAddresses[i], startAddress);
+                                Assert.AreEqual(expectedLengths[i], numberOfPoints);
+                            });
+            return returnValues[i++];
         }
 
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)

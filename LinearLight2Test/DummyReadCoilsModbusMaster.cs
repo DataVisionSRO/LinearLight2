@@ -30,6 +30,11 @@ namespace LinearLight2Test
             throw new NotImplementedException();
         }
 
+        public ushort[] ReadInputRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
             Assert.Multiple(() =>

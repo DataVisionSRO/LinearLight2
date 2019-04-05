@@ -31,6 +31,12 @@ namespace LinearLight2.NModbus
             return master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
         }
 
+        public ushort[] ReadInputRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            Thread.Sleep(MillisecondsDelayBetweenTransmits);
+            return master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+        }
+
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
             Thread.Sleep(MillisecondsDelayBetweenTransmits);
