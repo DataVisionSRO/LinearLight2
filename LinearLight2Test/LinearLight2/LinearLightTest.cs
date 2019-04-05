@@ -64,6 +64,20 @@ namespace LinearLight2Test.LinearLight2
         }
 
         [Test]
+        public void ReadBodyTemperaturesTest()
+        {
+            var addresses = new byte[] { 1, 2, 3 };
+            var startAddresses = new ushort[] { 3000 - 1, 3000 - 1, 3000 - 1, };
+            var lengths = new ushort[] { 1, 1, 1 };
+            var temperatures = new ushort[] { 30, 54, 15 };
+            var returnVals = temperatures.Select(x => new[] { x }).ToArray();
+
+            var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
+            var lili = new LinearLight(master, addresses.Length);
+            CollectionAssert.AreEqual(temperatures, lili.BodyTemperatures);
+        }
+
+        [Test]
         public void ReadFanEnablesTest()
         {
             var addresses = new byte[] { 1, 2, 3 };

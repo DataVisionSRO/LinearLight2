@@ -12,6 +12,7 @@ namespace LinearLight2
         private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
         private readonly ushort swTriggerCoil = 1000 - 1;
         private readonly ushort fanEnableCoil = 1001 - 1;
+        private readonly ushort bodyTemperatureInputRegister = 3000 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
         
@@ -45,6 +46,11 @@ namespace LinearLight2
             set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
         }
 
+        public IEnumerable<int> BodyTemperatures
+        {
+            get => ReadInputRegisterFromSegments(bodyTemperatureInputRegister);
+        }
+
         public IEnumerable<bool> FanEnables
         {
             get => ReadCoils(fanEnableCoil);
@@ -63,8 +69,14 @@ namespace LinearLight2
         private IEnumerable<int> ReadHoldingRegisterFromSegments(ushort address)
         {
             return Enumerable.Range(SlaveBaseAddress, segmentCount)
-                             .Select(index => modbusMaster.ReadHoldingRegisters((byte) index, address, 1)[0])
-                             .Select(dummy => (int) dummy);
+                             .Select(index => modbusMaster.ReadHoldingRegisters((byte)index, address, 1)[0])
+                             .Select(x => (int)x);
+        }
+        private IEnumerable<int> ReadInputRegisterFromSegments(ushort address)
+        {
+            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+                             .Select(index => modbusMaster.ReadInputRegisters((byte)index, address, 1)[0])
+                             .Select(x => (int)x);
         }
     }
 }
