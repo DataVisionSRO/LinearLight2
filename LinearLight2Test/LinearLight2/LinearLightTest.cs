@@ -11,31 +11,42 @@ namespace LinearLight2Test.LinearLight2
         public void SetIntensityTest()
         {
             ushort expectedIntensity = 15;
-            var master = new DummyBroadcastWriteModbusMaster(new ushort[]{4000-1, 4001 - 1}, new[]{expectedIntensity, expectedIntensity});
+            var registers = new ushort[] { 4000 - 1, 4001 - 1 };
+            var values = new[] { expectedIntensity, expectedIntensity };
+
+            var master = new DummyBroadcastWriteModbusMaster();
             var linearLight = new LinearLight(master, 0);
             linearLight.Intensity = expectedIntensity;
+
+            Assert.AreEqual(registers, master.CalledRegisterAdresses);
+            Assert.AreEqual(values, master.CalledValues);
         }
 
         [Test]
         public void SetFanSpeedTest()
         {
             ushort setSpeed = 50;
-            var master = new DummyBroadcastWriteModbusMaster(new ushort[] { 4002 - 1 }, new[] { setSpeed});
+            var registers = new ushort[] { 4002 - 1 };
+            var values = new[] { setSpeed };
+            var master = new DummyBroadcastWriteModbusMaster();
             var linearLight = new LinearLight(master, 0);
             linearLight.FanSpeed = setSpeed;
+
+            Assert.AreEqual(registers, master.CalledRegisterAdresses);
+            Assert.AreEqual(values, master.CalledValues);
         }
 
         [Test]
         public void ReadIntensities1Test()
         {
-            var addresses = new byte[] {1, 2, 3};
-            var startAddresses = new ushort[] {4000 - 1, 4000 - 1, 4000 - 1,};
-            var lengths = new ushort[] {1, 1, 1};
-            var intensities = new ushort[] {30, 54, 15};
-            var returnVals = intensities.Select(x => new[] {x}).ToArray();
+            var addresses = new byte[] { 1, 2, 3 };
+            var startAddresses = new ushort[] { 4000 - 1, 4000 - 1, 4000 - 1, };
+            var lengths = new ushort[] { 1, 1, 1 };
+            var intensities = new ushort[] { 30, 54, 15 };
+            var returnVals = intensities.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master,addresses.Length);
+            var lili = new LinearLight(master, addresses.Length);
             CollectionAssert.AreEqual(intensities, lili.SetIntensities1);
         }
         [Test]
@@ -55,7 +66,7 @@ namespace LinearLight2Test.LinearLight2
         [Test]
         public void ReadFanEnablesTest()
         {
-            var addresses = new byte[] {1, 2, 3};
+            var addresses = new byte[] { 1, 2, 3 };
             var startAddresses = new ushort[] { 1001 - 1, 1001 - 1, 1001 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var values = new[] { false, false, true };
@@ -63,27 +74,33 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadCoilsModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(values,lili.FanEnables);
+            CollectionAssert.AreEqual(values, lili.FanEnables);
         }
 
         [TestCase(false)]
         [TestCase(true)]
         public void SetFanEnableTest(bool value)
         {
-            var master = new DummyBroadcastWriteCoilModbusMaster(new ushort[] {1001 - 1}, new[] {value});
+            var registers = new ushort[] { 1001 - 1 };
+            var values = new[] { value };
+            var master = new DummyBroadcastWriteCoilModbusMaster();
             var lili = new LinearLight(master, 0);
             lili.FanEnable = value;
+            Assert.AreEqual(registers, master.CalledCoilAdresses);
+            Assert.AreEqual(values, master.CalledValues);
         }
 
         [TestCase(false)]
         [TestCase(true)]
         public void SetSwTriggerTest(bool value)
         {
-            var master = new DummyBroadcastWriteCoilModbusMaster(new ushort[] { 1000 - 1 }, new[] { value });
+            var registers = new ushort[] { 1000 - 1 };
+            var values = new[] { value };
+            var master = new DummyBroadcastWriteCoilModbusMaster();
             var lili = new LinearLight(master, 0);
             lili.SwTrigger = value;
+            Assert.AreEqual(registers, master.CalledCoilAdresses);
+            Assert.AreEqual(values, master.CalledValues);
         }
-
-
     }
 }

@@ -1,27 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using LinearLight2;
-using NUnit.Framework;
 
 namespace LinearLight2Test
 {
     internal class DummyBroadcastWriteModbusMaster : IModbusMaster
     {
-        private readonly ushort[] setRegister;
-        private readonly ushort[] expectedIntensity;
-        private int i;
-
-        public DummyBroadcastWriteModbusMaster(ushort[] setRegister, ushort[] expectedIntensity)
-        {
-            this.setRegister = setRegister;
-            this.expectedIntensity = expectedIntensity;
-        }
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
-            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(expectedIntensity[i], value);
-                                Assert.AreEqual(setRegister[i++], registerAddress);
-                            });
+            calledRegisterAdresses.Add(registerAddress);
+            calledValues.Add(value);
         }
 
         public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
@@ -38,5 +26,10 @@ namespace LinearLight2Test
         {
             throw new NotImplementedException();
         }
+        private readonly List<ushort> calledRegisterAdresses = new List<ushort>();
+        private readonly List<ushort> calledValues = new List<ushort>();
+
+        public IReadOnlyList<ushort> CalledRegisterAdresses => calledRegisterAdresses.AsReadOnly();
+        public IReadOnlyList<ushort> CalledValues => calledValues.AsReadOnly();
     }
 }

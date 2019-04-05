@@ -1,20 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using LinearLight2;
-using NUnit.Framework;
 
 namespace LinearLight2Test
 {
     internal class DummyBroadcastWriteCoilModbusMaster : IModbusMaster
     {
-        private readonly ushort[] setRegister;
-        private readonly bool[] values;
-        private int i;
-
-        public DummyBroadcastWriteCoilModbusMaster(ushort[] setRegister, bool[] values)
-        {
-            this.setRegister = setRegister;
-            this.values = values;
-        }
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
             throw new NotImplementedException();
@@ -32,12 +23,11 @@ namespace LinearLight2Test
 
         public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)
         {
-            Assert.Multiple(() =>
-                            {
-                                Assert.AreEqual(values[i], value);
-                                Assert.AreEqual(setRegister[i++], coilAddress);
-                            });
-
+            CalledCoilAdresses.Add(coilAddress);
+            CalledValues.Add(value);
         }
+
+        public readonly List<ushort> CalledCoilAdresses = new List<ushort>();
+        public readonly List<bool> CalledValues = new List<bool>();
     }
 }
