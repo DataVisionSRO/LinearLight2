@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace LinearLight2
 {
@@ -16,7 +14,6 @@ namespace LinearLight2
         private readonly ushort fanEnableCoil = 1001 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
-        private const int MillisecondsDelayBetweenTransmits = 70;
         
         public LinearLight(IModbusMaster master, int segmentCount)
         {
@@ -28,38 +25,24 @@ namespace LinearLight2
         {
             set
             {
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
                 modbusMaster.BroadcastWriteSingleRegister(setIntensity1HoldingRegister, (ushort) value);
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
                 modbusMaster.BroadcastWriteSingleRegister(setIntensity2HoldingRegister, (ushort) value);
             }
         }
 
         public int FanSpeed
         {
-            set
-            {
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                modbusMaster.BroadcastWriteSingleRegister(fanSpeedHoldingRegister, (ushort) value);
-            }
+            set => modbusMaster.BroadcastWriteSingleRegister(fanSpeedHoldingRegister, (ushort) value);
         }
 
         public bool SwTrigger
         {
-            set
-            {
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                modbusMaster.BroadcastWriteSingleCoil(swTriggerCoil, value);
-            }
+            set => modbusMaster.BroadcastWriteSingleCoil(swTriggerCoil, value);
         }
 
         public bool FanEnable
         {
-            set
-            {
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
-            }
+            set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
         }
 
         public IEnumerable<bool> FanEnables
@@ -69,10 +52,8 @@ namespace LinearLight2
 
         private IEnumerable<bool> ReadCoils(ushort address)
         {
-            foreach (var index in Enumerable.Range(SlaveBaseAddress,segmentCount))
-            {
-                yield return modbusMaster.ReadCoils((byte) index, address, 1)[0];
-            }
+            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+                             .Select(index => modbusMaster.ReadCoils((byte) index, address, 1)[0]);
         }
 
         public IEnumerable<int> SetIntensities1 => ReadHoldingRegisterFromSegments(setIntensity1HoldingRegister);
@@ -81,11 +62,9 @@ namespace LinearLight2
 
         private IEnumerable<int> ReadHoldingRegisterFromSegments(ushort address)
         {
-            foreach (var index in Enumerable.Range(SlaveBaseAddress, segmentCount))
-            {
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
-                yield return modbusMaster.ReadHoldingRegisters((byte) index, address, 1)[0];
-            }
+            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+                             .Select(index => modbusMaster.ReadHoldingRegisters((byte) index, address, 1)[0])
+                             .Select(dummy => (int) dummy);
         }
     }
 }
