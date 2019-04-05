@@ -78,6 +78,33 @@ namespace LinearLight2Test.LinearLight2
         }
 
         [Test]
+        public void ReadTemperatures1Test()
+        {
+            var addresses = new byte[] { 1, 2, 3 };
+            var startAddresses = new ushort[] { 3011 - 1, 3011 - 1, 3011 - 1, };
+            var lengths = new ushort[] { 1, 1, 1 };
+            var temperatures = new ushort[] { 30, 54, 15 };
+            var returnVals = temperatures.Select(x => new[] { x }).ToArray();
+
+            var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
+            var lili = new LinearLight(master, addresses.Length);
+            CollectionAssert.AreEqual(temperatures, lili.Temperatures1);
+        }
+
+        [Test]
+        public void ReadTemperatures2Test()
+        {
+            var addresses = new byte[] { 1, 2, 3 };
+            var startAddresses = new ushort[] { 3021 - 1, 3021 - 1, 3021 - 1, };
+            var lengths = new ushort[] { 1, 1, 1 };
+            var temperatures = new ushort[] { 30, 54, 15 };
+            var returnVals = temperatures.Select(x => new[] { x }).ToArray();
+
+            var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
+            var lili = new LinearLight(master, addresses.Length);
+            CollectionAssert.AreEqual(temperatures, lili.Temperatures2);
+        }
+        [Test]
         public void ReadFanEnablesTest()
         {
             var addresses = new byte[] { 1, 2, 3 };
