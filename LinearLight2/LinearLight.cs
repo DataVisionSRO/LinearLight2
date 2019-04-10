@@ -15,6 +15,10 @@ namespace LinearLight2
         private readonly ushort bodyTemperatureInputRegister = 3000 - 1;
         private readonly ushort temperature1InputRegister = 3001 - 1;
         private readonly ushort temperature2InputRegister = 3004 - 1;
+        private readonly ushort voltage1InputRegister = 3002 - 1;
+        private readonly ushort current1InputRegister = 3003 - 1;
+        private readonly ushort voltage2InputRegister = 3005 - 1;
+        private readonly ushort current2InputRegister = 3006 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
         
@@ -53,6 +57,18 @@ namespace LinearLight2
         public IEnumerable<int> Temperatures1 => ReadInputRegisterFromSegments(temperature1InputRegister);
 
         public IEnumerable<int> Temperatures2 => ReadInputRegisterFromSegments(temperature2InputRegister);
+
+        public IEnumerable<double> Amperes1 =>
+            ReadInputRegisterFromSegments(current1InputRegister).Select(x => x / 1000.0);
+
+        public IEnumerable<double> Amperes2 =>
+            ReadInputRegisterFromSegments(current2InputRegister).Select(x => x / 1000.0);
+
+        public IEnumerable<double> Volts1 =>
+            ReadInputRegisterFromSegments(voltage1InputRegister).Select(x => x / 1000.0);
+
+        public IEnumerable<double> Volts2 =>
+            ReadInputRegisterFromSegments(voltage2InputRegister).Select(x => x / 1000.0);
 
         public IEnumerable<bool> FanEnables => ReadCoils(fanEnableCoil);
 
