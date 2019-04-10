@@ -81,7 +81,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadTemperatures1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3011 - 1, 3011 - 1, 3011 - 1, };
+            var startAddresses = new ushort[] { 3001 - 1, 3001 - 1, 3001 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
@@ -95,7 +95,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadTemperatures2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3021 - 1, 3021 - 1, 3021 - 1, };
+            var startAddresses = new ushort[] { 3004 - 1, 3004 - 1, 3004 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
