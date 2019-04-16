@@ -12,13 +12,13 @@ namespace LinearLight2
         private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
         private readonly ushort swTriggerCoil = 1000 - 1;
         private readonly ushort fanEnableCoil = 1001 - 1;
-        private readonly ushort bodyTemperatureInputRegister = 3000 - 1;
-        private readonly ushort temperature1InputRegister = 3001 - 1;
-        private readonly ushort temperature2InputRegister = 3004 - 1;
-        private readonly ushort voltage1InputRegister = 3002 - 1;
-        private readonly ushort current1InputRegister = 3003 - 1;
-        private readonly ushort voltage2InputRegister = 3005 - 1;
-        private readonly ushort current2InputRegister = 3006 - 1;
+        private readonly ushort bodyTemperatureInputRegister = 3003 - 1;
+        private readonly ushort temperature1InputRegister = 3004 - 1;
+        private readonly ushort temperature2InputRegister = 3007 - 1;
+        private readonly ushort voltage1InputRegister = 3005 - 1;
+        private readonly ushort current1InputRegister = 3006 - 1;
+        private readonly ushort voltage2InputRegister = 3008 - 1;
+        private readonly ushort current2InputRegister = 3009 - 1;
         private readonly int segmentCount;
         private const byte SlaveBaseAddress = 0x01;
         

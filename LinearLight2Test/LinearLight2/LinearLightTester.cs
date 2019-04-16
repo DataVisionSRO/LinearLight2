@@ -14,11 +14,14 @@ namespace LinearLight2Test.LinearLight2
         [Explicit ("for manual testing only")]
         public void SetIntensity()
         {
-            using (var comm = new Communicator("COM28"))
+            using (var comm = new Communicator("COM29"))
             {
                 var master = new ModbusRtuMaster(comm);
                 var lili = new LinearLight(master, 1);
-                lili.Intensity = 0; 
+                lili.Intensity = 100;
+                lili.FanSpeed = 100;
+                lili.FanEnable = true;
+                lili.SwTrigger = true;
                 Thread.Sleep(500); 
                 Console.Out.WriteLine(string.Join(", ",lili.SetIntensities1.Select(x=>x.ToString())));
             }

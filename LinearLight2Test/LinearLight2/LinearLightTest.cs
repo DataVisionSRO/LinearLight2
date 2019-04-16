@@ -67,7 +67,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadBodyTemperaturesTest()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3000 - 1, 3000 - 1, 3000 - 1, };
+            var startAddresses = new ushort[] { 3003 - 1, 3003 - 1, 3003 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
@@ -81,7 +81,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadTemperatures1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3001 - 1, 3001 - 1, 3001 - 1, };
+            var startAddresses = new ushort[] { 3004 - 1, 3004 - 1, 3004 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
@@ -95,7 +95,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadTemperatures2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3004 - 1, 3004 - 1, 3004 - 1, };
+            var startAddresses = new ushort[] { 3007 - 1, 3007 - 1, 3007 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
@@ -109,7 +109,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadVolts1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3002 - 1, 3002 - 1, 3002 - 1, };
+            var startAddresses = new ushort[] { 3005 - 1, 3005 - 1, 3005 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort) (x * 1000) }).ToArray();
@@ -123,7 +123,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadVolts2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3005 - 1, 3005 - 1, 3005 - 1, };
+            var startAddresses = new ushort[] { 3008 - 1, 3008 - 1, 3008 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -137,7 +137,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3003 - 1, 3003 - 1, 3003 - 1, };
+            var startAddresses = new ushort[] { 3006 - 1, 3006 - 1, 3006 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -152,7 +152,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3006 - 1, 3006 - 1, 3006 - 1, };
+            var startAddresses = new ushort[] { 3009 - 1, 3009 - 1, 3009 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
