@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <VersionPrefix>0.0.1</VersionPrefix>
     <VersionSuffix>SNAPSHOT</VersionSuffix>
     <Authors>DataVision</Authors>
@@ -16,7 +16,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="NModbus" Version="3.0.58" />
-    <PackageReference Include="System.IO.Ports" Version="4.5.0" />
+    <PackageReference Include="System.IO.Ports" Version="4.6.0-preview3.19128.7" />
   </ItemGroup>
   
   <ItemGroup>
