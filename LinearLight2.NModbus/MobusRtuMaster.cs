@@ -9,6 +9,7 @@ namespace LinearLight2.NModbus
     {
         private global::NModbus.IModbusMaster master;
         private const int MillisecondsDelayBetweenTransmits = 70;
+        private readonly object communicatorLock = new object();
 
         public ModbusRtuMaster(IStreamResource streamResource)
         {
@@ -21,32 +22,47 @@ namespace LinearLight2.NModbus
         }
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
-            Thread.Sleep(MillisecondsDelayBetweenTransmits);
-            master.BroadcastWriteSingleRegister(registerAddress,value);
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                master.BroadcastWriteSingleRegister(registerAddress, value);
+            }
         }
 
         public ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            Thread.Sleep(MillisecondsDelayBetweenTransmits);
-            return master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                return master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
+            }
         }
 
         public ushort[] ReadInputRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            Thread.Sleep(MillisecondsDelayBetweenTransmits);
-            return master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                return master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+            }
         }
 
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            Thread.Sleep(MillisecondsDelayBetweenTransmits);
-            return master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                return master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+            }
         }
 
         public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)
         {
-            Thread.Sleep(MillisecondsDelayBetweenTransmits);
-            master.BroadcastWriteSingleCoil(coilAddress, value);
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                master.BroadcastWriteSingleCoil(coilAddress, value);
+            }
         }
     }
 }
