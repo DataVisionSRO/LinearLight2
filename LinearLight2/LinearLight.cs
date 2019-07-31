@@ -7,6 +7,11 @@ namespace LinearLight2
     {
 
         private readonly IModbusMaster modbusMaster;
+        
+        private readonly ushort lightStatusDiscreteInput = 1000 - 1;
+        private readonly ushort hardwareTriggerDiscreteInput = 1001 - 1;
+        private readonly ushort bodyOverheatDiscreteInput = 1101 - 1;
+        private readonly ushort ledOverheatDiscreteInput = 1201 - 1;
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
         private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
@@ -26,6 +31,11 @@ namespace LinearLight2
             this.segmentCount = segmentCount;
             modbusMaster = master;
         }
+
+        public IEnumerable<bool> LightOnFlags => ReadDiscreteInputsFromSegments(lightStatusDiscreteInput);
+        public IEnumerable<bool> HardwareTriggerStatus => ReadDiscreteInputsFromSegments(hardwareTriggerDiscreteInput);
+        public IEnumerable<bool> BodyOverheatFlags => ReadDiscreteInputsFromSegments(bodyOverheatDiscreteInput);
+        public IEnumerable<bool> LedOverheatFlags => ReadDiscreteInputsFromSegments(ledOverheatDiscreteInput);
         
         public int Intensity
         {
@@ -90,6 +100,12 @@ namespace LinearLight2
         {
             return Enumerable.Range(SlaveBaseAddress, segmentCount)
                 .Select(index => modbusMaster.ReadCoils((byte) index, address, 1)[0]);
+        }
+        
+        private IEnumerable<bool> ReadDiscreteInputsFromSegments(ushort address)
+        {
+            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+                .Select(index => modbusMaster.ReadDiscreteInputs((byte) index, address, 1)[0]);
         }
     }
 }
