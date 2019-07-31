@@ -67,7 +67,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadBodyTemperaturesTest()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3003 - 1, 3003 - 1, 3003 - 1, };
+            var startAddresses = new ushort[] { 3101 - 1, 3101 - 1, 3101 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
@@ -81,35 +81,21 @@ namespace LinearLight2Test.LinearLight2
         public void ReadTemperatures1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3004 - 1, 3004 - 1, 3004 - 1, };
+            var startAddresses = new ushort[] { 3201 - 1, 3201 - 1, 3201 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var temperatures = new ushort[] { 30, 54, 15 };
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(temperatures, lili.Temperatures1);
-        }
-
-        [Test]
-        public void ReadTemperatures2Test()
-        {
-            var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3007 - 1, 3007 - 1, 3007 - 1, };
-            var lengths = new ushort[] { 1, 1, 1 };
-            var temperatures = new ushort[] { 30, 54, 15 };
-            var returnVals = temperatures.Select(x => new[] { x }).ToArray();
-
-            var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(temperatures, lili.Temperatures2);
+            CollectionAssert.AreEqual(temperatures, lili.LedTemperatures);
         }
 
         [Test]
         public void ReadVolts1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3005 - 1, 3005 - 1, 3005 - 1, };
+            var startAddresses = new ushort[] { 3211 - 1, 3211 - 1, 3211 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort) (x * 1000) }).ToArray();
@@ -123,7 +109,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadVolts2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3008 - 1, 3008 - 1, 3008 - 1, };
+            var startAddresses = new ushort[] { 3221 - 1, 3221 - 1, 3221 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -137,7 +123,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3006 - 1, 3006 - 1, 3006 - 1, };
+            var startAddresses = new ushort[] { 3212 - 1, 3212 - 1, 3212 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -152,7 +138,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3009 - 1, 3009 - 1, 3009 - 1, };
+            var startAddresses = new ushort[] { 3222 - 1, 3222 - 1, 3222 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -166,7 +152,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadFanEnablesTest()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 1001 - 1, 1001 - 1, 1001 - 1, };
+            var startAddresses = new ushort[] { 2001 - 1, 2001 - 1, 2001 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var values = new[] { false, false, true };
             var returnVals = values.Select(x => new[] { x }).ToArray();
@@ -180,7 +166,7 @@ namespace LinearLight2Test.LinearLight2
         [TestCase(true)]
         public void SetFanEnableTest(bool value)
         {
-            var registers = new ushort[] { 1001 - 1 };
+            var registers = new ushort[] { 2001 - 1 };
             var values = new[] { value };
             var master = new DummyBroadcastWriteCoilModbusMaster();
             var lili = new LinearLight(master, 0);
@@ -193,7 +179,7 @@ namespace LinearLight2Test.LinearLight2
         [TestCase(true)]
         public void SetSwTriggerTest(bool value)
         {
-            var registers = new ushort[] { 1000 - 1 };
+            var registers = new ushort[] { 2000 - 1 };
             var values = new[] { value };
             var master = new DummyBroadcastWriteCoilModbusMaster();
             var lili = new LinearLight(master, 0);
