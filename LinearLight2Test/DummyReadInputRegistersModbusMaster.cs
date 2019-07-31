@@ -41,6 +41,11 @@ namespace LinearLight2Test
             return returnValues[i++];
         }
 
+        public bool[] ReadDiscreteInputs(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
             throw new NotImplementedException();

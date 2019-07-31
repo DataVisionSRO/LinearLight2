@@ -47,6 +47,15 @@ namespace LinearLight2.NModbus
             }
         }
 
+        public bool[] ReadDiscreteInputs(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            lock (communicatorLock)
+            {
+                Thread.Sleep(MillisecondsDelayBetweenTransmits);
+                return master.ReadInputs(slaveAddress, startAddress, numberOfPoints);
+            }
+        }
+
         public bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
             lock (communicatorLock)
