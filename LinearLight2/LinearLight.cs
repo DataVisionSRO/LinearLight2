@@ -18,7 +18,9 @@ namespace LinearLight2
         private readonly ushort swTriggerCoil = 2000 - 1;
         private readonly ushort fanEnableCoil = 2001 - 1;
         private readonly ushort bodyTemperatureInputRegister = 3101 - 1;
+        private readonly ushort bodyMaxTemperatureInputRegister = 3102 - 1;
         private readonly ushort ledTemperatureInputRegister = 3201 - 1;
+        private readonly ushort ledMaxTemperatureInputRegister = 3202 - 1;
         private readonly ushort voltage1InputRegister = 3211 - 1;
         private readonly ushort current1InputRegister = 3212 - 1;
         private readonly ushort voltage2InputRegister = 3221 - 1;
@@ -62,8 +64,10 @@ namespace LinearLight2
         }
 
         public IEnumerable<int> BodyTemperatures => ReadInputRegisterFromSegments(bodyTemperatureInputRegister);
+        public IEnumerable<int> BodyMaxTemperatures => ReadInputRegisterFromSegments(bodyMaxTemperatureInputRegister);
 
         public IEnumerable<int> LedTemperatures => ReadInputRegisterFromSegments(ledTemperatureInputRegister);
+        public IEnumerable<int> LedMaxTemperatures => ReadInputRegisterFromSegments(ledMaxTemperatureInputRegister);
 
         public IEnumerable<double> Amperes1 =>
             ReadInputRegisterFromSegments(current1InputRegister).Select(x => x / 1000.0);
