@@ -15,6 +15,7 @@ namespace LinearLight2
         private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
         private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
         private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
+        private readonly ushort InputSettingsHoldingRegister = 4003 - 1;
         private readonly ushort swTriggerCoil = 2000 - 1;
         private readonly ushort fanEnableCoil = 2001 - 1;
         private readonly ushort bodyTemperatureInputRegister = 3101 - 1;
@@ -61,6 +62,14 @@ namespace LinearLight2
         public bool FanEnable
         {
             set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
+        }
+
+        public TriggerMode TriggerMode
+        {
+            set
+            {
+                modbusMaster.BroadcastWriteSingleRegister(InputSettingsHoldingRegister,(ushort) value);
+            }
         }
 
         public IEnumerable<int> BodyTemperatures => ReadInputRegisterFromSegments(bodyTemperatureInputRegister);
