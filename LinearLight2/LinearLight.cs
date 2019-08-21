@@ -22,17 +22,24 @@ namespace LinearLight2
         private readonly ushort bodyMaxTemperatureInputRegister = 3102 - 1;
         private readonly ushort ledTemperatureInputRegister = 3201 - 1;
         private readonly ushort ledMaxTemperatureInputRegister = 3202 - 1;
+        private readonly ushort luxMeterValueInputRegister = 3208 - 1;
         private readonly ushort voltage1InputRegister = 3211 - 1;
         private readonly ushort current1InputRegister = 3212 - 1;
         private readonly ushort voltage2InputRegister = 3221 - 1;
         private readonly ushort current2InputRegister = 3222 - 1;
         private readonly int segmentCount;
-        private const byte SlaveBaseAddress = 0x01;
-        
-        public LinearLight(IModbusMaster master, int segmentCount)
+        private readonly byte SlaveBaseAddress = 0x01;
+
+
+        public LinearLight(IModbusMaster master, int segmentCount) : this(master, segmentCount, 1)
+        {
+            
+        }
+        public LinearLight(IModbusMaster master, int segmentCount, byte startAddr)
         {
             this.segmentCount = segmentCount;
             modbusMaster = master;
+            SlaveBaseAddress = startAddr;
         }
 
         public IEnumerable<bool> LightOnFlags => ReadDiscreteInputsFromSegments(lightStatusDiscreteInput);
@@ -77,6 +84,7 @@ namespace LinearLight2
 
         public IEnumerable<int> LedTemperatures => ReadInputRegisterFromSegments(ledTemperatureInputRegister);
         public IEnumerable<int> LedMaxTemperatures => ReadInputRegisterFromSegments(ledMaxTemperatureInputRegister);
+        public IEnumerable<int> LuxValues => ReadInputRegisterFromSegments(luxMeterValueInputRegister);
 
         public IEnumerable<double> Amperes1 =>
             ReadInputRegisterFromSegments(current1InputRegister).Select(x => x / 1000.0);
