@@ -11,7 +11,7 @@ namespace LinearLight2Test.LinearLight2
         public void SetIntensityTest()
         {
             ushort expectedIntensity = 15;
-            var registers = new ushort[] { 4000 - 1, 4001 - 1 };
+            var registers = new ushort[] { 4215 - 1, 4225 - 1 };
             var values = new[] { expectedIntensity, expectedIntensity };
 
             var master = new DummyBroadcastWriteModbusMaster();
@@ -26,7 +26,7 @@ namespace LinearLight2Test.LinearLight2
         public void SetFanSpeedTest()
         {
             ushort setSpeed = 50;
-            var registers = new ushort[] { 4002 - 1 };
+            var registers = new ushort[] { 4109 - 1 };
             var values = new[] { setSpeed };
             var master = new DummyBroadcastWriteModbusMaster();
             var linearLight = new LinearLight(master, 0);
@@ -40,7 +40,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadIntensities1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 4000 - 1, 4000 - 1, 4000 - 1, };
+            var startAddresses = new ushort[] { 4215 - 1, 4215 - 1, 4215 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var intensities = new ushort[] { 30, 54, 15 };
             var returnVals = intensities.Select(x => new[] { x }).ToArray();
@@ -53,7 +53,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadIntensities2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 4001 - 1, 4001 - 1, 4001 - 1, };
+            var startAddresses = new ushort[] { 4225 - 1, 4225 - 1, 4225 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var intensities = new ushort[] { 30, 54, 15 };
             var returnVals = intensities.Select(x => new[] { x }).ToArray();
@@ -95,7 +95,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadVolts1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3211 - 1, 3211 - 1, 3211 - 1, };
+            var startAddresses = new ushort[] { 3213 - 1, 3213 - 1, 3213 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort) (x * 1000) }).ToArray();
@@ -109,7 +109,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadVolts2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3221 - 1, 3221 - 1, 3221 - 1, };
+            var startAddresses = new ushort[] { 3223 - 1, 3223 - 1, 3223 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var voltages = new[] { 3.123, 54, 15 };
             var returnVals = voltages.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -123,7 +123,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps1Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3212 - 1, 3212 - 1, 3212 - 1, };
+            var startAddresses = new ushort[] { 3214 - 1, 3214 - 1, 3214 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
@@ -138,7 +138,7 @@ namespace LinearLight2Test.LinearLight2
         public void ReadAmps2Test()
         {
             var addresses = new byte[] { 1, 2, 3 };
-            var startAddresses = new ushort[] { 3222 - 1, 3222 - 1, 3222 - 1, };
+            var startAddresses = new ushort[] { 3224 - 1, 3224 - 1, 3224 - 1, };
             var lengths = new ushort[] { 1, 1, 1 };
             var currents = new[] { 3.123, 0.054, 15.123 };
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();

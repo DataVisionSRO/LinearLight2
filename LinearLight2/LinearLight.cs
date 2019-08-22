@@ -7,28 +7,35 @@ namespace LinearLight2
     {
 
         private readonly IModbusMaster modbusMaster;
-        
-        private readonly ushort lightStatusDiscreteInput = 1000 - 1;
-        private readonly ushort hardwareTriggerDiscreteInput = 1001 - 1;
-        private readonly ushort bodyOverheatDiscreteInput = 1101 - 1;
-        private readonly ushort ledOverheatDiscreteInput = 1201 - 1;
-        private readonly ushort setIntensity1HoldingRegister = 4000 - 1;
-        private readonly ushort setIntensity2HoldingRegister = 4001 - 1;
-        private readonly ushort fanSpeedHoldingRegister = 4002 - 1;
-        private readonly ushort InputSettingsHoldingRegister = 4003 - 1;
-        private readonly ushort swTriggerCoil = 2000 - 1;
-        private readonly ushort fanEnableCoil = 2001 - 1;
-        private readonly ushort bodyTemperatureInputRegister = 3101 - 1;
-        private readonly ushort bodyMaxTemperatureInputRegister = 3102 - 1;
-        private readonly ushort ledTemperatureInputRegister = 3201 - 1;
-        private readonly ushort ledMaxTemperatureInputRegister = 3202 - 1;
-        private readonly ushort luxMeterValueInputRegister = 3208 - 1;
-        private readonly ushort voltage1InputRegister = 3211 - 1;
-        private readonly ushort current1InputRegister = 3212 - 1;
-        private readonly ushort voltage2InputRegister = 3221 - 1;
-        private readonly ushort current2InputRegister = 3222 - 1;
+
+        private const ushort LightStatusDiscreteInput = 1000 - 1;
+        private const ushort HardwareTriggerDiscreteInput = 1001 - 1;
+        private const ushort BodyOverheatDiscreteInput = 1101 - 1;
+        private const ushort LedOverheatDiscreteInput = 1201 - 1;
+        private const ushort SetIntensity1HoldingRegister = 4215 - 1;
+        private const ushort SetIntensity2HoldingRegister = 4225 - 1;
+        private const ushort FanSpeedHoldingRegister = 4109 - 1;
+        private const ushort InputSettingsHoldingRegister = 4000 - 1;
+        private const ushort SwTriggerCoil = 2000 - 1;
+        private const ushort FanEnableCoil = 2001 - 1;
+        private const ushort ProtocolVersionInputRegister = 3000 - 1;
+        private const ushort SoftwareVersionInputRegister = 3001 - 1;
+        private const ushort HardwareVersionInputRegister = 3002 - 1;
+        private const ushort SnHighInputRegister = 3003 - 1;
+        private const ushort SnLowInputRegister = 3004 - 1;
+        private const ushort PnHighInputRegister = 3005 - 1;
+        private const ushort PnLowInputRegister = 3006 - 1;
+        private const ushort BodyTemperatureInputRegister = 3101 - 1;
+        private const ushort BodyMaxTemperatureInputRegister = 3102 - 1;
+        private const ushort LedTemperatureInputRegister = 3201 - 1;
+        private const ushort LedMaxTemperatureInputRegister = 3202 - 1;
+        private const ushort LuxMeterValueInputRegister = 3208 - 1;
+        private const ushort Voltage1InputRegister = 3213 - 1;
+        private const ushort Current1InputRegister = 3214 - 1;
+        private const ushort Voltage2InputRegister = 3223 - 1;
+        private const ushort Current2InputRegister = 3224 - 1;
         private readonly int segmentCount;
-        private readonly byte SlaveBaseAddress = 0x01;
+        private readonly byte slaveBaseAddress = 0x01;
 
 
         public LinearLight(IModbusMaster master, int segmentCount) : this(master, segmentCount, 1)
@@ -39,36 +46,37 @@ namespace LinearLight2
         {
             this.segmentCount = segmentCount;
             modbusMaster = master;
-            SlaveBaseAddress = startAddr;
+            slaveBaseAddress = startAddr;
         }
+        
 
-        public IEnumerable<bool> LightOnFlags => ReadDiscreteInputsFromSegments(lightStatusDiscreteInput);
-        public IEnumerable<bool> HardwareTriggerStatus => ReadDiscreteInputsFromSegments(hardwareTriggerDiscreteInput);
-        public IEnumerable<bool> BodyOverheatFlags => ReadDiscreteInputsFromSegments(bodyOverheatDiscreteInput);
-        public IEnumerable<bool> LedOverheatFlags => ReadDiscreteInputsFromSegments(ledOverheatDiscreteInput);
+        public IEnumerable<bool> LightOnFlags => ReadDiscreteInputsFromSegments(LightStatusDiscreteInput);
+        public IEnumerable<bool> HardwareTriggerStatus => ReadDiscreteInputsFromSegments(HardwareTriggerDiscreteInput);
+        public IEnumerable<bool> BodyOverheatFlags => ReadDiscreteInputsFromSegments(BodyOverheatDiscreteInput);
+        public IEnumerable<bool> LedOverheatFlags => ReadDiscreteInputsFromSegments(LedOverheatDiscreteInput);
         
         public int Intensity
         {
             set
             {
-                modbusMaster.BroadcastWriteSingleRegister(setIntensity1HoldingRegister, (ushort) value);
-                modbusMaster.BroadcastWriteSingleRegister(setIntensity2HoldingRegister, (ushort) value);
+                modbusMaster.BroadcastWriteSingleRegister(SetIntensity1HoldingRegister, (ushort) value);
+                modbusMaster.BroadcastWriteSingleRegister(SetIntensity2HoldingRegister, (ushort) value);
             }
         }
 
         public int FanSpeed
         {
-            set => modbusMaster.BroadcastWriteSingleRegister(fanSpeedHoldingRegister, (ushort) value);
+            set => modbusMaster.BroadcastWriteSingleRegister(FanSpeedHoldingRegister, (ushort) value);
         }
 
         public bool SwTrigger
         {
-            set => modbusMaster.BroadcastWriteSingleCoil(swTriggerCoil, value);
+            set => modbusMaster.BroadcastWriteSingleCoil(SwTriggerCoil, value);
         }
 
         public bool FanEnable
         {
-            set => modbusMaster.BroadcastWriteSingleCoil(fanEnableCoil, value);
+            set => modbusMaster.BroadcastWriteSingleCoil(FanEnableCoil, value);
         }
 
         public TriggerMode TriggerMode
@@ -79,53 +87,70 @@ namespace LinearLight2
             }
         }
 
-        public IEnumerable<int> BodyTemperatures => ReadInputRegisterFromSegments(bodyTemperatureInputRegister);
-        public IEnumerable<int> BodyMaxTemperatures => ReadInputRegisterFromSegments(bodyMaxTemperatureInputRegister);
+        public IEnumerable<int> ProtocolVersions => ReadInputRegisterFromSegments(ProtocolVersionInputRegister);
+        public IEnumerable<int> SoftwareVersions => ReadInputRegisterFromSegments(SoftwareVersionInputRegister);
+        public IEnumerable<int> HardwareVersions => ReadInputRegisterFromSegments(HardwareVersionInputRegister);
+        public IEnumerable<uint> SerialNumber => ReadUInt32SFromSegments(SnHighInputRegister, SnLowInputRegister);
 
-        public IEnumerable<int> LedTemperatures => ReadInputRegisterFromSegments(ledTemperatureInputRegister);
-        public IEnumerable<int> LedMaxTemperatures => ReadInputRegisterFromSegments(ledMaxTemperatureInputRegister);
-        public IEnumerable<int> LuxValues => ReadInputRegisterFromSegments(luxMeterValueInputRegister);
+        public IEnumerable<uint> ProductNumber => ReadUInt32SFromSegments(PnHighInputRegister, PnLowInputRegister);
+        public IEnumerable<int> BodyTemperatures => ReadInputRegisterFromSegments(BodyTemperatureInputRegister);
+        public IEnumerable<int> BodyMaxTemperatures => ReadInputRegisterFromSegments(BodyMaxTemperatureInputRegister);
+
+        public IEnumerable<int> LedTemperatures => ReadInputRegisterFromSegments(LedTemperatureInputRegister);
+        public IEnumerable<int> LedMaxTemperatures => ReadInputRegisterFromSegments(LedMaxTemperatureInputRegister);
+        public IEnumerable<int> LuxValues => ReadInputRegisterFromSegments(LuxMeterValueInputRegister);
 
         public IEnumerable<double> Amperes1 =>
-            ReadInputRegisterFromSegments(current1InputRegister).Select(x => x / 1000.0);
+            ReadInputRegisterFromSegments(Current1InputRegister).Select(x => x / 1000.0);
 
         public IEnumerable<double> Amperes2 =>
-            ReadInputRegisterFromSegments(current2InputRegister).Select(x => x / 1000.0);
+            ReadInputRegisterFromSegments(Current2InputRegister).Select(x => x / 1000.0);
 
         public IEnumerable<double> Volts1 =>
-            ReadInputRegisterFromSegments(voltage1InputRegister).Select(x => x / 1000.0);
+            ReadInputRegisterFromSegments(Voltage1InputRegister).Select(x => x / 1000.0);
 
         public IEnumerable<double> Volts2 =>
-            ReadInputRegisterFromSegments(voltage2InputRegister).Select(x => x / 1000.0);
+            ReadInputRegisterFromSegments(Voltage2InputRegister).Select(x => x / 1000.0);
 
-        public IEnumerable<bool> FanEnables => ReadCoils(fanEnableCoil);
+        public IEnumerable<bool> FanEnables => ReadCoils(FanEnableCoil);
 
-        public IEnumerable<int> SetIntensities1 => ReadHoldingRegisterFromSegments(setIntensity1HoldingRegister);
-        public IEnumerable<int> SetIntensities2 => ReadHoldingRegisterFromSegments(setIntensity2HoldingRegister);
+        public IEnumerable<int> SetIntensities1 => ReadHoldingRegisterFromSegments(SetIntensity1HoldingRegister);
+        public IEnumerable<int> SetIntensities2 => ReadHoldingRegisterFromSegments(SetIntensity2HoldingRegister);
 
 
         private IEnumerable<int> ReadHoldingRegisterFromSegments(ushort address)
         {
-            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+            return Enumerable.Range(slaveBaseAddress, segmentCount)
                              .Select(index => modbusMaster.ReadHoldingRegisters((byte)index, address, 1)[0])
                              .Select(x => (int)x);
         }
         private IEnumerable<int> ReadInputRegisterFromSegments(ushort address)
         {
-            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+            return Enumerable.Range(slaveBaseAddress, segmentCount)
                              .Select(index => modbusMaster.ReadInputRegisters((byte)index, address, 1)[0])
                              .Select(x => (int)x);
         }
         
+        private IEnumerable<uint> ReadUInt32SFromSegments(ushort addressHigh, ushort addressLow)
+        {
+            return Enumerable.Range(slaveBaseAddress, segmentCount)
+                .Select(index =>
+                {
+                    var high = modbusMaster.ReadInputRegisters((byte) index, addressHigh, 1)[0];
+                    var low = modbusMaster.ReadInputRegisters((byte) index, addressLow, 1)[0];
+                    return (((uint) high) << 16) | low;
+                });
+        }
+        
         private IEnumerable<bool> ReadCoils(ushort address)
         {
-            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+            return Enumerable.Range(slaveBaseAddress, segmentCount)
                 .Select(index => modbusMaster.ReadCoils((byte) index, address, 1)[0]);
         }
         
         private IEnumerable<bool> ReadDiscreteInputsFromSegments(ushort address)
         {
-            return Enumerable.Range(SlaveBaseAddress, segmentCount)
+            return Enumerable.Range(slaveBaseAddress, segmentCount)
                 .Select(index => modbusMaster.ReadDiscreteInputs((byte) index, address, 1)[0]);
         }
     }
