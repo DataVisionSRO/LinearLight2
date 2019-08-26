@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LinearLight2
@@ -27,6 +28,7 @@ namespace LinearLight2
         private const ushort PnLowInputRegister = 3006 - 1;
         private const ushort BodyTemperatureInputRegister = 3101 - 1;
         private const ushort BodyMaxTemperatureInputRegister = 3102 - 1;
+        private const ushort FanCurrentRpmInputRegister = 3109 - 1;
         private const ushort LedTemperatureInputRegister = 3201 - 1;
         private const ushort LedMaxTemperatureInputRegister = 3202 - 1;
         private const ushort LuxMeterValueInputRegister = 3208 - 1;
@@ -95,6 +97,7 @@ namespace LinearLight2
         public IEnumerable<uint> ProductNumber => ReadUInt32SFromSegments(PnHighInputRegister, PnLowInputRegister);
         public IEnumerable<int> BodyTemperatures => ReadInputRegisterFromSegments(BodyTemperatureInputRegister);
         public IEnumerable<int> BodyMaxTemperatures => ReadInputRegisterFromSegments(BodyMaxTemperatureInputRegister);
+        public IEnumerable<int> FanCurrentRpms => ReadInputRegisterFromSegments(FanCurrentRpmInputRegister, "Reading fan rmp failed. Note that reading has been implemented since protocol version 1.01.");
 
         public IEnumerable<int> LedTemperatures => ReadInputRegisterFromSegments(LedTemperatureInputRegister);
         public IEnumerable<int> LedMaxTemperatures => ReadInputRegisterFromSegments(LedMaxTemperatureInputRegister);
@@ -124,11 +127,27 @@ namespace LinearLight2
                              .Select(index => modbusMaster.ReadHoldingRegisters((byte)index, address, 1)[0])
                              .Select(x => (int)x);
         }
+
         private IEnumerable<int> ReadInputRegisterFromSegments(ushort address)
         {
+            return ReadInputRegisterFromSegments(address, "Input register read error. Check that requested value is supported by the protocol number light is implementing.");
+        }
+        
+        private IEnumerable<int> ReadInputRegisterFromSegments(ushort address, string exceptionMessage)
+        {
             return Enumerable.Range(slaveBaseAddress, segmentCount)
-                             .Select(index => modbusMaster.ReadInputRegisters((byte)index, address, 1)[0])
-                             .Select(x => (int)x);
+                             .Select(index =>
+                             {
+                                 try
+                                 {
+                                     return modbusMaster.ReadInputRegisters((byte) index, address, 1)[0];
+                                 }
+                                 catch(Exception e)
+                                 {
+                                     throw new Exception(exceptionMessage, e);
+                                 }
+                             })
+            .Select(x => (int)x);
         }
         
         private IEnumerable<uint> ReadUInt32SFromSegments(ushort addressHigh, ushort addressLow)
