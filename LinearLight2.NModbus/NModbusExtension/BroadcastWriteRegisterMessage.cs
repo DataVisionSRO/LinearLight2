@@ -57,7 +57,7 @@ namespace LinearLight2.NModbus.NModbusExtension
                 {
                     pdu.AddRange(BitConverter.GetBytes(IPAddress.HostToNetworkOrder((short)startAddress.Value)));
                 }
-                
+
                 if (data != null)
                 {
                     pdu.AddRange(data.NetworkBytes);

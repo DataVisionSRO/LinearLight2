@@ -42,7 +42,7 @@ namespace LinearLight2
 
         public LinearLight(IModbusMaster master, int segmentCount) : this(master, segmentCount, 1)
         {
-            
+
         }
         public LinearLight(IModbusMaster master, int segmentCount, byte startAddr)
         {
@@ -50,13 +50,13 @@ namespace LinearLight2
             modbusMaster = master;
             slaveBaseAddress = startAddr;
         }
-        
+
 
         public IEnumerable<bool> LightOnFlags => ReadDiscreteInputsFromSegments(LightStatusDiscreteInput);
         public IEnumerable<bool> HardwareTriggerStatus => ReadDiscreteInputsFromSegments(HardwareTriggerDiscreteInput);
         public IEnumerable<bool> BodyOverheatFlags => ReadDiscreteInputsFromSegments(BodyOverheatDiscreteInput);
         public IEnumerable<bool> LedOverheatFlags => ReadDiscreteInputsFromSegments(LedOverheatDiscreteInput);
-        
+
         public int Intensity
         {
             set
@@ -132,7 +132,7 @@ namespace LinearLight2
         {
             return ReadInputRegisterFromSegments(address, "Input register read error. Check that requested value is supported by the protocol number light is implementing.");
         }
-        
+
         private IEnumerable<int> ReadInputRegisterFromSegments(ushort address, string exceptionMessage)
         {
             return Enumerable.Range(slaveBaseAddress, segmentCount)
@@ -149,7 +149,7 @@ namespace LinearLight2
                              })
             .Select(x => (int)x);
         }
-        
+
         private IEnumerable<uint> ReadUInt32SFromSegments(ushort addressHigh, ushort addressLow)
         {
             return Enumerable.Range(slaveBaseAddress, segmentCount)
@@ -160,13 +160,13 @@ namespace LinearLight2
                     return (((uint) high) << 16) | low;
                 });
         }
-        
+
         private IEnumerable<bool> ReadCoils(ushort address)
         {
             return Enumerable.Range(slaveBaseAddress, segmentCount)
                 .Select(index => modbusMaster.ReadCoils((byte) index, address, 1)[0]);
         }
-        
+
         private IEnumerable<bool> ReadDiscreteInputsFromSegments(ushort address)
         {
             return Enumerable.Range(slaveBaseAddress, segmentCount)

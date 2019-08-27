@@ -22,7 +22,7 @@ namespace LinearLight2Test.LinearLight2
                 lili.FanSpeed = 100;
                 lili.FanEnable = true;
                 lili.SwTrigger = true;
-                Thread.Sleep(500); 
+                Thread.Sleep(500);
                 Console.Out.WriteLine(string.Join(", ",lili.SetIntensities1.Select(x=>x.ToString())));
             }
         }

@@ -48,7 +48,7 @@ namespace LinearLight2Test
                                 Assert.AreEqual(expectedStartAddresses[i], startAddress);
                                 Assert.AreEqual(expectedLengths[i], numberOfPoints);
                             });
-            return returnValues[i++]; 
+            return returnValues[i++];
         }
 
         public void BroadcastWriteSingleCoil(ushort coilAddress, bool value)

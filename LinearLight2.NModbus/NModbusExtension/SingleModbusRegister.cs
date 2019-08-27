@@ -21,7 +21,7 @@ namespace LinearLight2.NModbus.NModbusExtension
 
                 var b = BitConverter.GetBytes((ushort)IPAddress.HostToNetworkOrder((short)value));
                 bytes.Write(b, 0, b.Length);
-               
+
                 return bytes.ToArray();
             }
         }
