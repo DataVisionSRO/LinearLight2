@@ -18,8 +18,8 @@ namespace LinearLight2Test.LinearLight2
             {
                 var master = new ModbusRtuMaster(comm);
                 var lili = new LinearLight(master, 1);
-                lili.Intensity = 100;
-                lili.FanSpeed = 100;
+                lili.Intensity = 10;
+                //lili.FanSpeed = 100;
                 lili.FanEnable = true;
                 lili.SwTrigger = true;
                 Thread.Sleep(500);

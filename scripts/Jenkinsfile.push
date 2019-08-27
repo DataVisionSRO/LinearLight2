@@ -16,6 +16,7 @@ pipeline {
             stages {
                 stage('clean') {
                     steps {
+                        bat 'git clean -dfx'
                         checkout scm
                         bat 'git clean -dfx'
                     }
@@ -60,7 +61,11 @@ pipeline {
                         }  
                     }
                     environment {
-                       RUNTIME = 'dotnet'
+                       RUNTIME = 'D:\\ProgFiles\\dotnet\\dotnet.3.0-prev.exe.lnk'
+                       RELEASE_VERSION = """${sh(
+                                                 returnStdout: true,
+                                                 script: 'echo $GERRIT_CHANGE_SUBJECT | sed -e "s/Releas.*version //" | tr -d "\n"'
+                                                 )}"""
                     }  
                     stages {
                         stage('clean') {
