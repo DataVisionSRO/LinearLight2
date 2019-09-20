@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace LinearLight2
@@ -16,6 +17,7 @@ namespace LinearLight2
         private const ushort SetIntensity1HoldingRegister = 4215 - 1;
         private const ushort SetIntensity2HoldingRegister = 4225 - 1;
         private const ushort FanSpeedHoldingRegister = 4109 - 1;
+        private const ushort ConfigurationHoldingRegister = 4090 - 1;
         private const ushort InputSettingsHoldingRegister = 4000 - 1;
         private const ushort SwTriggerCoil = 2000 - 1;
         private const ushort FanEnableCoil = 2001 - 1;
@@ -89,6 +91,14 @@ namespace LinearLight2
             }
         }
 
+        public ConfigurationStatus Configuration
+        {
+            set
+            {
+                modbusMaster.BroadcastWriteSingleRegister(ConfigurationHoldingRegister, (ushort) value);
+            }
+        }
+
         public IEnumerable<int> ProtocolVersions => ReadInputRegisterFromSegments(ProtocolVersionInputRegister);
         public IEnumerable<int> SoftwareVersions => ReadInputRegisterFromSegments(SoftwareVersionInputRegister);
         public IEnumerable<int> HardwareVersions => ReadInputRegisterFromSegments(HardwareVersionInputRegister);
@@ -119,6 +129,9 @@ namespace LinearLight2
 
         public IEnumerable<int> SetIntensities1 => ReadHoldingRegisterFromSegments(SetIntensity1HoldingRegister);
         public IEnumerable<int> SetIntensities2 => ReadHoldingRegisterFromSegments(SetIntensity2HoldingRegister);
+
+        public IEnumerable<ConfigurationStatus> ConfigurationRegisters =>
+            ReadHoldingRegisterFromSegments(ConfigurationHoldingRegister).Select(x => (ConfigurationStatus) x);
 
 
         private IEnumerable<int> ReadHoldingRegisterFromSegments(ushort address)
@@ -172,5 +185,14 @@ namespace LinearLight2
             return Enumerable.Range(slaveBaseAddress, segmentCount)
                 .Select(index => modbusMaster.ReadDiscreteInputs((byte) index, address, 1)[0]);
         }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public enum ConfigurationStatus
+    {
+        OK = 0,
+        FAIL = 1,
+        Saving = 0x5AFE,
+        LoadingDefault = 0xDEFA,
     }
 }
