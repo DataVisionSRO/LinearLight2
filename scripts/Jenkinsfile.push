@@ -3,7 +3,7 @@ pipeline {
         label 'windows && dotnet'
     }
     environment {
-       RUNTIME = 'D:\\ProgFiles\\dotnet\\dotnet.3.0-prev.exe.lnk'
+       RUNTIME = 'dotnet'
     }
     options {
         timestamps()
@@ -61,11 +61,7 @@ pipeline {
                         }  
                     }
                     environment {
-                       RUNTIME = 'D:\\ProgFiles\\dotnet\\dotnet.3.0-prev.exe.lnk'
-                       RELEASE_VERSION = """${sh(
-                                                 returnStdout: true,
-                                                 script: 'echo $GERRIT_CHANGE_SUBJECT | sed -e "s/Releas.*version //" | tr -d "\n"'
-                                                 )}"""
+                       RUNTIME = 'dotnet'
                     }  
                     stages {
                         stage('clean') {
