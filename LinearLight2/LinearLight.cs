@@ -37,7 +37,7 @@ namespace LinearLight2
         private const ushort Voltage2InputRegister = 3223 - 1;
         private const ushort Current2InputRegister = 3224 - 1;
         private readonly int segmentCount;
-        private readonly byte slaveBaseAddress = 0x01;
+        private readonly byte slaveBaseAddress;
 
 
         public LinearLight(IModbusMaster master, int segmentCount) : this(master, segmentCount, 1)

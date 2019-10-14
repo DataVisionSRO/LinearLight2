@@ -44,7 +44,7 @@ pipeline {
                 stage('analyse') {
                     steps {
                         bat 'D:/ProgFiles/CommandLineTools/inspectcode.exe -o=code_inspection.xml LinearLight2.sln'
-                        warnings canComputeNew: false, canResolveRelativePaths: false, parserConfigurations: [[parserName: 'Resharper InspectCode', pattern: 'code_inspection.xml']]
+                        warnings canComputeNew: false, canResolveRelativePaths: false, parserConfigurations: [[parserName: 'Resharper InspectCode', pattern: 'code_inspection.xml']], failedTotalNormal: '0'
                     }
                 }
             }

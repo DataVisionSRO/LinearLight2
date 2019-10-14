@@ -18,6 +18,7 @@ namespace LinearLight2Test.LinearLight2.NModbus
         {
             ushort value = 10;
             var reg = new SingleModbusRegister(value);
+            // ReSharper disable once ShiftExpressionRightOperandNotEqualRealCount
             var expectedBytes = new[] {(byte) (value >> 0xFF), (byte) (value & 0xFF)};
             Assert.AreEqual(expectedBytes, reg.NetworkBytes);
         }
