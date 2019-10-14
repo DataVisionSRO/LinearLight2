@@ -43,7 +43,7 @@ pipeline {
                 }
                 stage('analyse') {
                     steps {
-                        bat 'D:/ProgFiles/CommandLineTools/inspectcode.exe -o=code_inspection.xml -p=D:/ProgFiles/TaLe.DotSettings LinearLight2.sln'
+                        bat 'D:/ProgFiles/CommandLineTools/inspectcode.exe -o=code_inspection.xml LinearLight2.sln'
                         warnings canComputeNew: false, canResolveRelativePaths: false, parserConfigurations: [[parserName: 'Resharper InspectCode', pattern: 'code_inspection.xml']]
                     }
                 }
