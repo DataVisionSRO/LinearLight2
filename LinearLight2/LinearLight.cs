@@ -20,7 +20,7 @@ namespace LinearLight2
             segments = new List<Segment>(Enumerable.Range(startAddr,segmentCount).Select(x=>new Segment(modbusMaster,(byte)x)));
         }
 
-        
+
 
         public IReadOnlyList<Segment> Segments => segments.AsReadOnly();
 

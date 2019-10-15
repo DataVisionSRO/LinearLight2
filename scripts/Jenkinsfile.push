@@ -22,13 +22,13 @@ pipeline {
                     }
                 }
                 stage('build') {
-                    steps {               
+                    steps {
                         bat '%RUNTIME% build LinearLight2.sln -c Release'
                     }
                 }
                 stage ('test') {
                     steps {
-                        bat '%RUNTIME% test LinearLight2Test/LinearLight2Test.csproj -c Release --logger:trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'               
+                        bat '%RUNTIME% test LinearLight2Test/LinearLight2Test.csproj -c Release --logger:trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
                         step([$class: 'MSTestPublisher', testResultsFile:"LinearLight2Test/TestResults/*.trx", failOnError: true, keepLongStdio: true])
                         cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'LinearLight2Test\\coverage.cobertura.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false, methodCoverageTargets: '80.0, 0.0, 0.0', lineCoverageTargets: '80.0, 0.0, 0.0', conditionalCoverageTargets: '70.0, 0.0, 0.0'
                     }
@@ -58,11 +58,11 @@ pipeline {
                     when {
                         expression {
                             return env.GERRIT_CHANGE_SUBJECT =~ '^Released version \\d*\\.\\d*\\.\\d*$'
-                        }  
+                        }
                     }
                     environment {
                        RUNTIME = 'dotnet'
-                    }  
+                    }
                     stages {
                         stage('clean') {
                             steps {
@@ -71,7 +71,7 @@ pipeline {
                             }
                         }
                         stage('build') {
-                            steps {               
+                            steps {
                                 bat '%RUNTIME% build LinearLight2/LinearLight2.csproj -c Release'
                                 bat '%RUNTIME% build LinearLight2.NModbus/LinearLight2.NModbus.csproj -c Release'
                             }
