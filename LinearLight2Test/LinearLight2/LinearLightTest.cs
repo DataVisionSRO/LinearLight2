@@ -47,7 +47,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(intensities, lili.SetIntensities1);
+            CollectionAssert.AreEqual(intensities, lili.Segments.Select(x=>x.SetIntensity1));
         }
         [Test]
         public void ReadIntensities2Test()
@@ -60,7 +60,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(intensities, lili.SetIntensities2);
+            CollectionAssert.AreEqual(intensities, lili.Segments.Select(x=>x.SetIntensity2));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(temperatures, lili.BodyTemperatures);
+            CollectionAssert.AreEqual(temperatures, lili.Segments.Select(x=>x.BodyTemperature));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(temperatures, lili.LedTemperatures);
+            CollectionAssert.AreEqual(temperatures, lili.Segments.Select(x=>x.LedTemperature));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(voltages, lili.Volts1);
+            CollectionAssert.AreEqual(voltages, lili.Segments.Select(x=>x.Volts1));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(voltages, lili.Volts2);
+            CollectionAssert.AreEqual(voltages, lili.Segments.Select(x=>x.Volts2));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(currents, lili.Amperes1);
+            CollectionAssert.AreEqual(currents, lili.Segments.Select(x=>x.Amperes1));
         }
 
 
@@ -145,7 +145,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(currents, lili.Amperes2);
+            CollectionAssert.AreEqual(currents, lili.Segments.Select(x=>x.Amperes2));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace LinearLight2Test.LinearLight2
 
             var master = new DummyReadCoilsModbusMaster(addresses, startAddresses, lengths, returnVals);
             var lili = new LinearLight(master, addresses.Length);
-            CollectionAssert.AreEqual(values, lili.FanEnables);
+            CollectionAssert.AreEqual(values, lili.Segments.Select(x=>x.FanEnable));
         }
 
         [TestCase(false)]
