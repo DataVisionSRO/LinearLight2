@@ -47,6 +47,12 @@ namespace LinearLight2
         public bool BodyOverheatFlag => ReadDiscreteInputsFromSegment(BodyOverheatDiscreteInput);
         public bool LedOverheatFlag => ReadDiscreteInputsFromSegment(LedOverheatDiscreteInput);
 
+        public bool FanEnable
+        {
+            get => ReadCoilFromSegment(FanEnableCoil);
+            set => WriteSingleCoil(FanEnableCoil, value);
+        }
+
         public int ProtocolVersion => ReadInputRegisterFromSegment(ProtocolVersionInputRegister);
         public int SoftwareVersion => ReadInputRegisterFromSegment(SoftwareVersionInputRegister);
         public int HardwareVersion => ReadInputRegisterFromSegment(HardwareVersionInputRegister);
@@ -55,32 +61,44 @@ namespace LinearLight2
         public uint ProductNumber => ReadUInt32SFromSegment(PnHighInputRegister, PnLowInputRegister);
         public int BodyTemperature => ReadInputRegisterFromSegment(BodyTemperatureInputRegister);
         public int BodyMaxTemperature => ReadInputRegisterFromSegment(BodyMaxTemperatureInputRegister);
-        public int FanCurrentRpm => ReadInputRegisterFromSegment(FanCurrentRpmInputRegister, "Reading fan rmp failed. Note that reading has been implemented since protocol version 1.01.");
+
+        public int FanCurrentRpm => ReadInputRegisterFromSegment(FanCurrentRpmInputRegister,
+                                                                 "Reading fan rmp failed. Note that reading has been implemented since protocol version 1.01.");
 
         public int LedTemperature => ReadInputRegisterFromSegment(LedTemperatureInputRegister);
         public int LedMaxTemperature => ReadInputRegisterFromSegment(LedMaxTemperatureInputRegister);
         public int LuxValue => ReadInputRegisterFromSegment(LuxMeterValueInputRegister);
 
-        public bool FanEnable => ReadCoilFromSegment(FanEnableCoil);
-
         public double Amperes1 =>
             ReadInputRegisterFromSegment(Current1InputRegister) / 1000.0;
 
         public double Amperes2 =>
-            ReadInputRegisterFromSegment(Current2InputRegister)/ 1000.0;
+            ReadInputRegisterFromSegment(Current2InputRegister) / 1000.0;
 
         public double Volts1 =>
-            ReadInputRegisterFromSegment(Voltage1InputRegister)/ 1000.0;
+            ReadInputRegisterFromSegment(Voltage1InputRegister) / 1000.0;
 
         public double Volts2 =>
             ReadInputRegisterFromSegment(Voltage2InputRegister) / 1000.0;
 
-        
-        public int SetIntensity1 => ReadHoldingRegisterFromSegment(SetIntensity1HoldingRegister);
-        public int SetIntensity2 => ReadHoldingRegisterFromSegment(SetIntensity2HoldingRegister);
 
-        public ConfigurationStatus ConfigurationRegister =>
-            (ConfigurationStatus) ReadHoldingRegisterFromSegment(ConfigurationHoldingRegister);
+        public int SetIntensity1
+        {
+            get => ReadHoldingRegisterFromSegment(SetIntensity1HoldingRegister);
+            set => WriteSingleRegister(SetIntensity1HoldingRegister, (ushort) value);
+        }
+
+        public int SetIntensity2
+        {
+            get => ReadHoldingRegisterFromSegment(SetIntensity2HoldingRegister);
+            set => WriteSingleRegister(SetIntensity2HoldingRegister, (ushort) value);
+        }
+
+        public ConfigurationStatus ConfigurationRegister
+        {
+            get => (ConfigurationStatus) ReadHoldingRegisterFromSegment(ConfigurationHoldingRegister);
+            set => WriteSingleRegister(ConfigurationHoldingRegister, (ushort) value);
+        }
 
 
         private int ReadHoldingRegisterFromSegment(ushort address)
@@ -121,6 +139,16 @@ namespace LinearLight2
         private bool ReadCoilFromSegment(ushort address)
         {
             return modbusMaster.ReadCoils(slaveAddress, address, 1)[0];
+        }
+
+        private void WriteSingleCoil(ushort address, bool value)
+        {
+            modbusMaster.WriteSingleCoil(slaveAddress, address, value);
+        }
+
+        private void WriteSingleRegister(ushort address, ushort value)
+        {
+            modbusMaster.WriteSingleRegister(slaveAddress,address, value);
         }
     }
 }
