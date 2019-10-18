@@ -36,6 +36,17 @@ namespace LinearLight2Test
         {
             throw new NotImplementedException();
         }
+
+        public void WriteSingleCoil(byte slaveAddress, ushort coilAddress, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteSingleRegister(byte slaveAddress, ushort registerAddress, ushort value)
+        {
+            throw new NotImplementedException();
+        }
+
         private readonly List<ushort> calledRegisterAdresses = new List<ushort>();
         private readonly List<ushort> calledValues = new List<ushort>();
 

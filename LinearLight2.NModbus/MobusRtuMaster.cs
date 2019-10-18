@@ -20,6 +20,23 @@ namespace LinearLight2.NModbus
             master.Transport.ReadTimeout = 200;
             master.Transport.Retries = 3;
         }
+
+        public void WriteSingleCoil(byte slaveAddress, ushort coilAddress, bool value)
+        {
+            lock (communicatorLock)
+            {
+                master.WriteSingleCoil(slaveAddress, coilAddress, value);
+            }
+        }
+
+        public void WriteSingleRegister(byte slaveAddress, ushort registerAddress, ushort value)
+        {
+            lock (communicatorLock)
+            {
+                master.WriteSingleRegister(slaveAddress, registerAddress, value);
+            }
+        }
+
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
             lock (communicatorLock)

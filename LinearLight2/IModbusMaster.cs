@@ -8,5 +8,7 @@
         bool[] ReadDiscreteInputs(byte slaveAddress, ushort startAddress, ushort numberOfPoints);
         bool[] ReadCoils(byte slaveAddress, ushort startAddress, ushort numberOfPoints);
         void BroadcastWriteSingleCoil(ushort coilAddress, bool value);
+        void WriteSingleCoil(byte slaveAddress, ushort coilAddress, bool value);
+        void WriteSingleRegister(byte slaveAddress, ushort registerAddress, ushort value);
     }
 }
