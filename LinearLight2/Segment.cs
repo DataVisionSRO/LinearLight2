@@ -53,6 +53,12 @@ namespace LinearLight2
             set => WriteSingleCoil(FanEnableCoil, value);
         }
 
+        public bool SwTrigger
+        {
+            get => ReadCoilFromSegment(SwTriggerCoil);
+            set => WriteSingleCoil(SwTriggerCoil, value);
+        }
+
         public int ProtocolVersion => ReadInputRegisterFromSegment(ProtocolVersionInputRegister);
         public int SoftwareVersion => ReadInputRegisterFromSegment(SoftwareVersionInputRegister);
         public int HardwareVersion => ReadInputRegisterFromSegment(HardwareVersionInputRegister);
@@ -98,6 +104,18 @@ namespace LinearLight2
         {
             get => (ConfigurationStatus) ReadHoldingRegisterFromSegment(ConfigurationHoldingRegister);
             set => WriteSingleRegister(ConfigurationHoldingRegister, (ushort) value);
+        }
+
+        public int SetFanSpeed
+        {
+            get => ReadHoldingRegisterFromSegment(FanSpeedHoldingRegister);
+            set => WriteSingleRegister(FanSpeedHoldingRegister, (ushort) value);
+        }
+
+        public TriggerMode TriggerMode
+        {
+            get => (TriggerMode) ReadHoldingRegisterFromSegment(InputSettingsHoldingRegister);
+            set => WriteSingleRegister(InputSettingsHoldingRegister, (ushort) value);
         }
 
 
