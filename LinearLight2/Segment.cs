@@ -2,7 +2,7 @@
 
 namespace LinearLight2
 {
-    public class Segment
+    public class Segment : ISegment
     {
         public const ushort LightStatusDiscreteInput = 1000 - 1;
         public const ushort HardwareTriggerDiscreteInput = 1001 - 1;

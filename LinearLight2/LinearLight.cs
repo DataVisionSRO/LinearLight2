@@ -22,7 +22,7 @@ namespace LinearLight2
 
 
 
-        public IReadOnlyList<Segment> Segments => segments.AsReadOnly();
+        public IReadOnlyList<ISegment> Segments => segments.AsReadOnly();
 
         public int Intensity
         {
