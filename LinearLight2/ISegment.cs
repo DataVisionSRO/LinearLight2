@@ -11,8 +11,8 @@ namespace LinearLight2
         int ProtocolVersion { get; }
         int SoftwareVersion { get; }
         int HardwareVersion { get; }
-        uint SerialNumber { get; }
-        uint ProductNumber { get; }
+        string SerialNumber { get; }
+        string ProductNumber { get; }
         int BodyTemperature { get; }
         int BodyMaxTemperature { get; }
         int FanCurrentRpm { get; }

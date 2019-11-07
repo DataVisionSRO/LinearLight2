@@ -62,9 +62,9 @@ namespace LinearLight2
         public int ProtocolVersion => ReadInputRegisterFromSegment(ProtocolVersionInputRegister);
         public int SoftwareVersion => ReadInputRegisterFromSegment(SoftwareVersionInputRegister);
         public int HardwareVersion => ReadInputRegisterFromSegment(HardwareVersionInputRegister);
-        public uint SerialNumber => ReadUInt32SFromSegment(SnHighInputRegister, SnLowInputRegister);
+        public string SerialNumber => ReadStringFromSegments(SnHighInputRegister, SnLowInputRegister);
 
-        public uint ProductNumber => ReadUInt32SFromSegment(PnHighInputRegister, PnLowInputRegister);
+        public string ProductNumber => ReadStringFromSegments(PnHighInputRegister, PnLowInputRegister);
         public int BodyTemperature => ReadInputRegisterFromSegment(BodyTemperatureInputRegister);
         public int BodyMaxTemperature => ReadInputRegisterFromSegment(BodyMaxTemperatureInputRegister);
 
@@ -141,12 +141,14 @@ namespace LinearLight2
             }
         }
 
-        private uint ReadUInt32SFromSegment(ushort addressHigh, ushort addressLow)
+        private string ReadStringFromSegments(ushort addressHigh, ushort addressLow)
         {
-
             var high = modbusMaster.ReadInputRegisters(slaveAddress, addressHigh, 1)[0];
             var low = modbusMaster.ReadInputRegisters(slaveAddress, addressLow, 1)[0];
-            return (((uint) high) << 16) | low;
+
+            var highStr = high.ToString("X4");
+            var lowStr = low.ToString("X4");
+            return $"{highStr}{lowStr}";
         }
 
         private bool ReadDiscreteInputsFromSegment(ushort address)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -66,9 +67,9 @@ namespace LinearLight2
         public IEnumerable<int> ProtocolVersions => Segments.Select(x=>x.ProtocolVersion);
         public IEnumerable<int> SoftwareVersions => Segments.Select(x=>x.SoftwareVersion);
         public IEnumerable<int> HardwareVersions => Segments.Select(x=>x.HardwareVersion);
-        public IEnumerable<uint> SerialNumber => Segments.Select(x=>x.SerialNumber);
+        public IEnumerable<uint> SerialNumber => Segments.Select(x=>Convert.ToUInt32(x.SerialNumber, 16));
 
-        public IEnumerable<uint> ProductNumber => Segments.Select(x=>x.ProductNumber);
+        public IEnumerable<uint> ProductNumber => Segments.Select(x=>Convert.ToUInt32(x.ProductNumber, 16));
         public IEnumerable<int> BodyTemperatures => Segments.Select(x=>x.BodyTemperature);
         public IEnumerable<int> BodyMaxTemperatures => Segments.Select(x=>x.BodyMaxTemperature);
         public IEnumerable<int> FanCurrentRpms => Segments.Select(x=>x.FanCurrentRpm);
