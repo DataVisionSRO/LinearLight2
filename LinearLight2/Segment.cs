@@ -11,6 +11,7 @@ namespace LinearLight2
         public const ushort SetIntensity1HoldingRegister = 4215 - 1;
         public const ushort SetIntensity2HoldingRegister = 4225 - 1;
         public const ushort FanSpeedHoldingRegister = 4109 - 1;
+        public const ushort FanModeHoldingRegister = 4110 - 1;
         public const ushort ConfigurationHoldingRegister = 4090 - 1;
         public const ushort InputSettingsHoldingRegister = 4000 - 1;
         public const ushort SwTriggerCoil = 2000 - 1;
@@ -25,6 +26,11 @@ namespace LinearLight2
         public const ushort BodyTemperatureInputRegister = 3101 - 1;
         public const ushort BodyMaxTemperatureInputRegister = 3102 - 1;
         public const ushort FanCurrentRpmInputRegister = 3109 - 1;
+        public const ushort FanSetSpeedInputRegister = 3110 - 1;
+        public const ushort FanAutoMinSpeedInputRegister = 3111 - 1;
+        public const ushort FanAutoMaxSpeedInputRegister = 3112 - 1;
+        public const ushort FanAutoMinTempInputRegister = 3113 - 1;
+        public const ushort FanAutoMaxTempInputRegister = 3114 - 1;
         public const ushort LedTemperatureInputRegister = 3201 - 1;
         public const ushort LedMaxTemperatureInputRegister = 3202 - 1;
         public const ushort LuxMeterValueInputRegister = 3208 - 1;
@@ -71,6 +77,12 @@ namespace LinearLight2
         public int FanCurrentRpm => ReadInputRegisterFromSegment(FanCurrentRpmInputRegister,
                                                                  "Reading fan rmp failed. Note that reading has been implemented since protocol version 1.01.");
 
+        public int FanSetSpeed => ReadInputRegisterFromSegment(FanSetSpeedInputRegister);
+        public int FanAutoMinSpeed => ReadInputRegisterFromSegment(FanAutoMinSpeedInputRegister);
+        public int FanAutoMaxSpeed => ReadInputRegisterFromSegment(FanAutoMaxSpeedInputRegister);
+        public int FanAutoMinTemp => ReadInputRegisterFromSegment(FanAutoMinTempInputRegister);
+        public int FanAutoMaxTemp => ReadInputRegisterFromSegment(FanAutoMaxTempInputRegister);
+
         public int LedTemperature => ReadInputRegisterFromSegment(LedTemperatureInputRegister);
         public int LedMaxTemperature => ReadInputRegisterFromSegment(LedMaxTemperatureInputRegister);
         public int LuxValue => ReadInputRegisterFromSegment(LuxMeterValueInputRegister);
@@ -87,6 +99,12 @@ namespace LinearLight2
         public double Volts2 =>
             ReadInputRegisterFromSegment(Voltage2InputRegister) / 1000.0;
 
+
+        public int FanMode
+        {
+            get => ReadHoldingRegisterFromSegment(FanModeHoldingRegister);
+            set => WriteSingleRegister(FanModeHoldingRegister, (ushort) value);
+        }
 
         public int SetIntensity1
         {

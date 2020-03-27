@@ -57,6 +57,11 @@ namespace LinearLight2
         {
             set => modbusMaster.BroadcastWriteSingleRegister(Segment.ConfigurationHoldingRegister, (ushort) value);
         }
+
+        public int FanMode
+        {
+            set => modbusMaster.BroadcastWriteSingleRegister(Segment.FanModeHoldingRegister, (ushort) value);
+        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
