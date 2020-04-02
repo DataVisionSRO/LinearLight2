@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace LinearLight2
@@ -62,14 +61,5 @@ namespace LinearLight2
         {
             set => modbusMaster.BroadcastWriteSingleRegister(Segment.FanModeHoldingRegister, (ushort) value);
         }
-    }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum ConfigurationStatus
-    {
-        OK = 0,
-        FAIL = 1,
-        Saving = 0x5AFE,
-        LoadingDefault = 0xDEFA,
     }
 }
