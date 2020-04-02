@@ -100,9 +100,9 @@ namespace LinearLight2
             ReadInputRegisterFromSegment(Voltage2InputRegister) / 1000.0;
 
 
-        public int FanMode
+        public FanMode FanMode
         {
-            get => ReadHoldingRegisterFromSegment(FanModeHoldingRegister);
+            get => (FanMode) ReadHoldingRegisterFromSegment(FanModeHoldingRegister);
             set => WriteSingleRegister(FanModeHoldingRegister, (ushort) value);
         }
 

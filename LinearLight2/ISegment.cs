@@ -30,7 +30,7 @@ namespace LinearLight2
         double Volts2 { get; }
         TriggerMode TriggerMode { get; set; }
         int SetFanSpeed { get; set; }
-        int FanMode { get; set; }
+        FanMode FanMode { get; set; }
         int SetIntensity1 { get; set; }
         int SetIntensity2 { get; set; }
         ConfigurationStatus ConfigurationRegister { get; set; }
