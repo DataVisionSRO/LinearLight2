@@ -8,7 +8,7 @@ namespace LinearLight2.NModbus
     public class ModbusRtuMaster : IModbusMaster
     {
         private global::NModbus.IModbusMaster master;
-        private const int MillisecondsDelayBetweenTransmits = 30;
+        private const int MillisecondsDelayBetweenTransmits = 5;
         private readonly object communicatorLock = new object();
 
         public ModbusRtuMaster(IStreamResource streamResource) : this(streamResource, 200, 200, 3)
