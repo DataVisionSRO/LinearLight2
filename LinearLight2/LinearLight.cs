@@ -5,7 +5,7 @@ namespace LinearLight2
 {
     public class LinearLight
     {
-
+        private const int CompatibleProtocolVersion = 0x103;
         private readonly IModbusMaster modbusMaster;
         private readonly List<Segment> segments;
 
@@ -19,7 +19,7 @@ namespace LinearLight2
             segments = new List<Segment>(Enumerable.Range(startAddr,segmentCount).Select(x=>new Segment(modbusMaster,(byte)x)));
         }
 
-
+        public bool IsCompatibleProtocolVersion => Segments.All(x => x.ProtocolVersion == CompatibleProtocolVersion);
 
         public IReadOnlyList<ISegment> Segments => segments.AsReadOnly();
 
