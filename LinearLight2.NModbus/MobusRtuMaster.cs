@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using LinearLight2.NModbus.NModbusExtension;
 using NModbus;
 using NModbus.IO;
@@ -8,7 +9,32 @@ namespace LinearLight2.NModbus
     public class ModbusRtuMaster : IModbusMaster
     {
         private global::NModbus.IModbusMaster master;
-        private const int MillisecondsDelayBetweenTransmits = 5;
+        private int millisecondsBetweenTransmits = 5;
+
+        public int MillisecondsDelayBetweenTransmits
+        {
+            get
+            {
+                lock (communicatorLock)
+                {
+                    return millisecondsBetweenTransmits;
+                }
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    lock (communicatorLock)
+                    {
+                        millisecondsBetweenTransmits = value;
+                    }
+                }
+                else
+                    throw new ArgumentOutOfRangeException(nameof(value),
+                        $"Delay between transmits must be greater than zero.");
+            }
+        }
+
         private readonly object communicatorLock = new object();
 
         public ModbusRtuMaster(IStreamResource streamResource) : this(streamResource, 200, 200, 3)
@@ -29,6 +55,7 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
+                Thread.Sleep(millisecondsBetweenTransmits);
                 master.WriteSingleCoil(slaveAddress, coilAddress, value);
             }
         }
@@ -37,6 +64,7 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
+                Thread.Sleep(millisecondsBetweenTransmits);
                 master.WriteSingleRegister(slaveAddress, registerAddress, value);
             }
         }
@@ -45,8 +73,8 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
+                Thread.Sleep(millisecondsBetweenTransmits);
                 master.BroadcastWriteSingleRegister(registerAddress, value);
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
             }
         }
 
@@ -54,7 +82,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                return master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
+                Thread.Sleep(millisecondsBetweenTransmits);
+                var ret = master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
+                return ret;
             }
         }
 
@@ -62,7 +92,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                return master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+                Thread.Sleep(millisecondsBetweenTransmits);
+                var ret = master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+                return ret;
             }
         }
 
@@ -70,7 +102,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                return master.ReadInputs(slaveAddress, startAddress, numberOfPoints);
+                Thread.Sleep(millisecondsBetweenTransmits);
+                var ret = master.ReadInputs(slaveAddress, startAddress, numberOfPoints);
+                return ret;
             }
         }
 
@@ -78,7 +112,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                return master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+                Thread.Sleep(millisecondsBetweenTransmits);
+                var ret = master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+                return ret;
             }
         }
 
@@ -86,8 +122,8 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
+                Thread.Sleep(millisecondsBetweenTransmits);
                 master.BroadcastWriteSingleCoil(coilAddress, value);
-                Thread.Sleep(MillisecondsDelayBetweenTransmits);
             }
         }
     }
