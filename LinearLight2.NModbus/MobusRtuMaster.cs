@@ -10,6 +10,7 @@ namespace LinearLight2.NModbus
     {
         private global::NModbus.IModbusMaster master;
         private int millisecondsBetweenTransmits = 5;
+        private DateTime nextAllowedSendTime;
 
         public int MillisecondsDelayBetweenTransmits
         {
@@ -44,6 +45,7 @@ namespace LinearLight2.NModbus
         public ModbusRtuMaster(IStreamResource streamResource, int writeTimeout, int readTimeout, int retries)
         {
             var modbusFactory = new ModbusFactory();
+            ResetNextAllowedSendTime();
 
             master = modbusFactory.CreateRtuMaster(streamResource);
             master.Transport.WriteTimeout = writeTimeout;
@@ -51,12 +53,14 @@ namespace LinearLight2.NModbus
             master.Transport.Retries = retries;
         }
 
+
         public void WriteSingleCoil(byte slaveAddress, ushort coilAddress, bool value)
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 master.WriteSingleCoil(slaveAddress, coilAddress, value);
+                ResetNextAllowedSendTime();
             }
         }
 
@@ -64,8 +68,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 master.WriteSingleRegister(slaveAddress, registerAddress, value);
+                ResetNextAllowedSendTime();
             }
         }
 
@@ -73,8 +78,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 master.BroadcastWriteSingleRegister(registerAddress, value);
+                ResetNextAllowedSendTime();
             }
         }
 
@@ -82,8 +88,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 var ret = master.ReadHoldingRegisters(slaveAddress, startAddress, numberOfPoints);
+                ResetNextAllowedSendTime();
                 return ret;
             }
         }
@@ -92,8 +99,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 var ret = master.ReadInputRegisters(slaveAddress, startAddress, numberOfPoints);
+                ResetNextAllowedSendTime();
                 return ret;
             }
         }
@@ -102,8 +110,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 var ret = master.ReadInputs(slaveAddress, startAddress, numberOfPoints);
+                ResetNextAllowedSendTime();
                 return ret;
             }
         }
@@ -112,8 +121,9 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 var ret = master.ReadCoils(slaveAddress, startAddress, numberOfPoints);
+                ResetNextAllowedSendTime();
                 return ret;
             }
         }
@@ -122,9 +132,20 @@ namespace LinearLight2.NModbus
         {
             lock (communicatorLock)
             {
-                Thread.Sleep(millisecondsBetweenTransmits);
+                DelayFromLastSentMessage();
                 master.BroadcastWriteSingleCoil(coilAddress, value);
+                ResetNextAllowedSendTime();
             }
+        }
+
+        private void DelayFromLastSentMessage()
+        {
+            SpinWait.SpinUntil(() => DateTime.UtcNow > nextAllowedSendTime);
+        }
+
+        private void ResetNextAllowedSendTime()
+        {
+            nextAllowedSendTime = DateTime.UtcNow + TimeSpan.FromMilliseconds(millisecondsBetweenTransmits);
         }
     }
 }
