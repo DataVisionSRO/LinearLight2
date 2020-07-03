@@ -6,6 +6,8 @@ namespace LinearLight2Test
 {
     internal class DummyBroadcastWriteModbusMaster : IModbusMaster
     {
+        public int MillisecondsDelayBetweenTransmits { get; set; }
+
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
             calledRegisterAdresses.Add(registerAddress);

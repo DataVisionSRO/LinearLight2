@@ -20,6 +20,9 @@ namespace LinearLight2Test
             this.expectedLengths = expectedLengths;
             this.returnValues = returnValues;
         }
+
+        public int MillisecondsDelayBetweenTransmits { get; set; }
+
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
             throw new NotImplementedException();

@@ -2,6 +2,7 @@
 {
     public interface IModbusMaster
     {
+        int MillisecondsDelayBetweenTransmits { get; set; }
         void BroadcastWriteSingleRegister(ushort registerAddress, ushort value);
         ushort[] ReadHoldingRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints);
         ushort[] ReadInputRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints);

@@ -1,6 +1,6 @@
 namespace LinearLight2
 {
-    public interface ISegment
+    public interface ISegmentV101
     {
         bool LightOnFlag { get; }
         bool HardwareTriggerStatus { get; }
@@ -16,11 +16,6 @@ namespace LinearLight2
         int BodyTemperature { get; }
         int BodyMaxTemperature { get; }
         int FanCurrentRpm { get; }
-        int FanSetSpeed { get; }
-        int FanAutoMinSpeed { get; }
-        int FanAutoMaxSpeed { get; }
-        int FanAutoMinTemp { get; }
-        int FanAutoMaxTemp { get; }
         int LedTemperature { get; }
         int LedMaxTemperature { get; }
         int LuxValue { get; }
@@ -30,9 +25,8 @@ namespace LinearLight2
         double Volts2 { get; }
         TriggerMode TriggerMode { get; set; }
         int SetFanSpeed { get; set; }
-        FanMode FanMode { get; set; }
+
         int SetIntensity1 { get; set; }
         int SetIntensity2 { get; set; }
-        ConfigurationStatus ConfigurationRegister { get; set; }
     }
 }

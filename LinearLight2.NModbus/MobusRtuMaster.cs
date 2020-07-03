@@ -9,6 +9,7 @@ namespace LinearLight2.NModbus
     public class ModbusRtuMaster : IModbusMaster
     {
         private global::NModbus.IModbusMaster master;
+        private const int BroadcastLengthMilliseconds = 2;
         private int millisecondsBetweenTransmits = 5;
         private DateTime nextAllowedSendTime;
 
@@ -80,7 +81,7 @@ namespace LinearLight2.NModbus
             {
                 DelayFromLastSentMessage();
                 master.BroadcastWriteSingleRegister(registerAddress, value);
-                ResetNextAllowedSendTime();
+                ResetNextAllowedSendTime(TimeSpan.FromMilliseconds(BroadcastLengthMilliseconds));
             }
         }
 
@@ -134,7 +135,7 @@ namespace LinearLight2.NModbus
             {
                 DelayFromLastSentMessage();
                 master.BroadcastWriteSingleCoil(coilAddress, value);
-                ResetNextAllowedSendTime();
+                ResetNextAllowedSendTime(TimeSpan.FromMilliseconds(BroadcastLengthMilliseconds));
             }
         }
 
@@ -145,7 +146,13 @@ namespace LinearLight2.NModbus
 
         private void ResetNextAllowedSendTime()
         {
-            nextAllowedSendTime = DateTime.UtcNow + TimeSpan.FromMilliseconds(millisecondsBetweenTransmits);
+            ResetNextAllowedSendTime(TimeSpan.Zero);
+        }
+
+        private void ResetNextAllowedSendTime(TimeSpan additionalOffset)
+        {
+            nextAllowedSendTime = DateTime.UtcNow + TimeSpan.FromMilliseconds(millisecondsBetweenTransmits) +
+                                  additionalOffset;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace LinearLight2Test.LinearLight2
             using (var comm = new Communicator("COM29"))
             {
                 var master = new ModbusRtuMaster(comm);
-                var lili = new LinearLight(master, 1);
+                var lili = new LinearLightV103(master, 1);
                 lili.Intensity = 10;
                 //lili.FanSpeed = 100;
                 lili.FanEnable = true;

@@ -6,6 +6,8 @@ namespace LinearLight2Test
 {
     internal class DummyBroadcastWriteCoilModbusMaster : IModbusMaster
     {
+        public int MillisecondsDelayBetweenTransmits { get; set; }
+
         public void BroadcastWriteSingleRegister(ushort registerAddress, ushort value)
         {
             throw new NotImplementedException();

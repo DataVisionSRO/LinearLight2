@@ -15,7 +15,7 @@ namespace LinearLight2Test.LinearLight2
             var values = new[] { expectedIntensity, expectedIntensity };
 
             var master = new DummyBroadcastWriteModbusMaster();
-            var linearLight = new LinearLight(master, 0);
+            var linearLight = new LinearLightV103(master, 0);
             linearLight.Intensity = expectedIntensity;
 
             Assert.AreEqual(registers, master.CalledRegisterAdresses);
@@ -29,7 +29,7 @@ namespace LinearLight2Test.LinearLight2
             var registers = new ushort[] { 4109 - 1 };
             var values = new[] { setSpeed };
             var master = new DummyBroadcastWriteModbusMaster();
-            var linearLight = new LinearLight(master, 0);
+            var linearLight = new LinearLightV103(master, 0);
             linearLight.FanSpeed = setSpeed;
 
             Assert.AreEqual(registers, master.CalledRegisterAdresses);
@@ -46,7 +46,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = intensities.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(intensities, lili.Segments.Select(x=>x.SetIntensity1));
         }
         [Test]
@@ -59,7 +59,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = intensities.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(intensities, lili.Segments.Select(x=>x.SetIntensity2));
         }
 
@@ -73,7 +73,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(temperatures, lili.Segments.Select(x=>x.BodyTemperature));
         }
 
@@ -87,7 +87,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = temperatures.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(temperatures, lili.Segments.Select(x=>x.LedTemperature));
         }
 
@@ -101,7 +101,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = voltages.Select(x => new[] { (ushort) (x * 1000) }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(voltages, lili.Segments.Select(x=>x.Volts1));
         }
 
@@ -115,7 +115,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = voltages.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(voltages, lili.Segments.Select(x=>x.Volts2));
         }
 
@@ -129,7 +129,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(currents, lili.Segments.Select(x=>x.Amperes1));
         }
 
@@ -144,7 +144,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = currents.Select(x => new[] { (ushort)(x * 1000) }).ToArray();
 
             var master = new DummyReadInputRegistersModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(currents, lili.Segments.Select(x=>x.Amperes2));
         }
 
@@ -158,7 +158,7 @@ namespace LinearLight2Test.LinearLight2
             var returnVals = values.Select(x => new[] { x }).ToArray();
 
             var master = new DummyReadCoilsModbusMaster(addresses, startAddresses, lengths, returnVals);
-            var lili = new LinearLight(master, addresses.Length);
+            var lili = new LinearLightV103(master, addresses.Length);
             CollectionAssert.AreEqual(values, lili.Segments.Select(x=>x.FanEnable));
         }
 
@@ -169,7 +169,7 @@ namespace LinearLight2Test.LinearLight2
             var registers = new ushort[] { 2001 - 1 };
             var values = new[] { value };
             var master = new DummyBroadcastWriteCoilModbusMaster();
-            var lili = new LinearLight(master, 0);
+            var lili = new LinearLightV103(master, 0);
             lili.FanEnable = value;
             Assert.AreEqual(registers, master.CalledCoilAdresses);
             Assert.AreEqual(values, master.CalledValues);
@@ -182,7 +182,7 @@ namespace LinearLight2Test.LinearLight2
             var registers = new ushort[] { 2000 - 1 };
             var values = new[] { value };
             var master = new DummyBroadcastWriteCoilModbusMaster();
-            var lili = new LinearLight(master, 0);
+            var lili = new LinearLightV103(master, 0);
             lili.SwTrigger = value;
             Assert.AreEqual(registers, master.CalledCoilAdresses);
             Assert.AreEqual(values, master.CalledValues);
