@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace LinearLight2
 {
-    public interface ILinearLightV101
+    public interface ILinearLightV101:ILinearLight
     {
-        int MillisecondsBetweenTransmits { get; }
         IReadOnlyList<ISegmentV101> Segments { get; }
 
         int Intensity { set; }
