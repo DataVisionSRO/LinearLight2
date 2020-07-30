@@ -1,5 +1,5 @@
 ﻿using System;
-using LinearLight2;
+using LinearLight2.Modbus;
 using NUnit.Framework;
 
 namespace LinearLight2Test

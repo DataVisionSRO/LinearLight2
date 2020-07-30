@@ -1,5 +1,5 @@
 using System.Linq;
-using LinearLight2;
+using LinearLight2.Light;
 using NUnit.Framework;
 
 namespace LinearLight2Test.LinearLight2

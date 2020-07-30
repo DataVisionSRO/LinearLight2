@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace LinearLight2
+namespace LinearLight2.Light.Settings
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum ConfigurationStatus

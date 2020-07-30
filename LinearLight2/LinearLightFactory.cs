@@ -1,4 +1,7 @@
 using System;
+using LinearLight2.Light;
+using LinearLight2.Light.Utils;
+using LinearLight2.Modbus;
 
 namespace LinearLight2
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using LinearLight2;
+using LinearLight2.Light;
 using LinearLight2.NModbus;
 using NUnit.Framework;
 

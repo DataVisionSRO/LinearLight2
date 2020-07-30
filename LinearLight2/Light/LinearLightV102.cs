@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using LinearLight2.Light.Segment;
+using LinearLight2.Light.Settings;
+using LinearLight2.Modbus;
 
-namespace LinearLight2
+namespace LinearLight2.Light
 {
     public class LinearLightV102 : LinearLightV101, ILinearLightV102
     {

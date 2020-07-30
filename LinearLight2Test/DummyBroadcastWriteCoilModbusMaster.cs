@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LinearLight2;
+using LinearLight2.Modbus;
 
 namespace LinearLight2Test
 {

@@ -1,4 +1,4 @@
-﻿namespace LinearLight2
+﻿namespace LinearLight2.Modbus
 {
     public interface IModbusMaster
     {

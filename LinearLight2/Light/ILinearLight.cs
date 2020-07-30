@@ -1,4 +1,4 @@
-namespace LinearLight2
+namespace LinearLight2.Light
 {
     public interface ILinearLight
     {

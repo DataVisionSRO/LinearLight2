@@ -1,6 +1,6 @@
 using System;
 
-namespace LinearLight2
+namespace LinearLight2.Light.Utils
 {
     public static class ProductNumberUtils
     {

@@ -1,4 +1,6 @@
-namespace LinearLight2
+using LinearLight2.Light.Settings;
+
+namespace LinearLight2.Light.Segment
 {
     public interface ISegmentV102 : ISegmentV101
     {

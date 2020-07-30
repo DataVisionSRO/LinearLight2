@@ -9,7 +9,7 @@ namespace LinearLight2Test.LinearLight2
         [TestCase("04032008", 8)]
         public void TestGetSegmentCount(string productNumber, int expectedSegmentCount)
         {
-            var actualSegmentCount = global::LinearLight2.ProductNumberUtils.GetSegmentCount(productNumber);
+            var actualSegmentCount = global::LinearLight2.Light.Utils.ProductNumberUtils.GetSegmentCount(productNumber);
             Assert.AreEqual(expectedSegmentCount, actualSegmentCount);
         }
 
@@ -17,7 +17,7 @@ namespace LinearLight2Test.LinearLight2
         public void TestGetSegmentCount_UnsupportedFamily(string productNumber)
         {
             Assert.Throws<NotSupportedException>(() =>
-                global::LinearLight2.ProductNumberUtils.GetSegmentCount(productNumber));
+                global::LinearLight2.Light.Utils.ProductNumberUtils.GetSegmentCount(productNumber));
         }
     }
 }

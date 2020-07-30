@@ -3,6 +3,7 @@ using System.Threading;
 using LinearLight2.NModbus.NModbusExtension;
 using NModbus;
 using NModbus.IO;
+using IModbusMaster = LinearLight2.Modbus.IModbusMaster;
 
 namespace LinearLight2.NModbus
 {

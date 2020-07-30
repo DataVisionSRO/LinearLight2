@@ -1,4 +1,7 @@
-namespace LinearLight2
+using LinearLight2.Light.Settings;
+using LinearLight2.Modbus;
+
+namespace LinearLight2.Light.Segment
 {
     public class SegmentV101:ISegmentV101
     {
