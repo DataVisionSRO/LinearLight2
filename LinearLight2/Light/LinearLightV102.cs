@@ -22,7 +22,7 @@ namespace LinearLight2.Light
             segments = new List<SegmentV102>(Enumerable.Range(startAddr, segmentCount)
                 .Select(x => new SegmentV102(modbusMaster, (byte) x)));
         }
-        public new bool IsCompatibleProtocolVersion => Segments.All(x => x.ProtocolVersion == CompatibleProtocolVersion);
+        public new bool HasCompatibleProtocolVersion => Segments.All(x => x.ProtocolVersion == CompatibleProtocolVersion);
         public new IReadOnlyList<ISegmentV102> Segments => segments.AsReadOnly();
 
         IReadOnlyList<ISegmentV101> ILinearLightV101.Segments => Segments;

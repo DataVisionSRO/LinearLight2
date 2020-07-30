@@ -23,7 +23,7 @@ namespace LinearLight2.Light
                 .Select(x => new SegmentV101(modbusMaster, (byte) x)));
         }
 
-        public bool IsCompatibleProtocolVersion => Segments.All(x => x.ProtocolVersion == CompatibleProtocolVersion);
+        public bool HasCompatibleProtocolVersion => Segments.All(x => x.ProtocolVersion == CompatibleProtocolVersion);
 
         public int MillisecondsBetweenTransmits => 70;
         public IReadOnlyList<ISegmentV101> Segments => segments.AsReadOnly();
