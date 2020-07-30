@@ -8,7 +8,7 @@ namespace LinearLight2.Light
 {
     public class LinearLightV101:ILinearLightV101
     {
-        private const int CompatibleProtocolVersion = 0x101;
+        public const string CompatibleProtocolVersion = "1.01";
         private readonly IModbusMaster modbusMaster;
         private readonly List<SegmentV101> segments;
 

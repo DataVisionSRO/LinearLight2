@@ -3,7 +3,7 @@ using LinearLight2.Modbus;
 
 namespace LinearLight2.Light.Segment
 {
-    public class SegmentV101:ISegmentV101
+    public class SegmentV101 : ISegmentV101
     {
         public const ushort LightStatusDiscreteInput = 1000 - 1;
         public const ushort HardwareTriggerDiscreteInput = 1001 - 1;
@@ -59,8 +59,15 @@ namespace LinearLight2.Light.Segment
             set => WriteSingleCoil(SwTriggerCoil, value);
         }
 
-        public int ProtocolVersion => ReadInputRegisterFromSegment(ProtocolVersionInputRegister);
-        public int SoftwareVersion => ReadInputRegisterFromSegment(SoftwareVersionInputRegister);
+        public string ProtocolVersion =>
+            VersionRegisterToString(ReadInputRegisterFromSegment(ProtocolVersionInputRegister));
+
+        private static string VersionRegisterToString(int version)
+        {
+            return $"{version >> 8}.{(version & 0xFF):00}";
+        }
+
+        public string SoftwareVersion => VersionRegisterToString(ReadInputRegisterFromSegment(SoftwareVersionInputRegister));
         public int HardwareVersion => ReadInputRegisterFromSegment(HardwareVersionInputRegister);
         public string SerialNumber => ReadStringFromSegments(SnHighInputRegister, SnLowInputRegister);
 
@@ -149,7 +156,7 @@ namespace LinearLight2.Light.Segment
 
         protected void WriteSingleRegister(ushort address, ushort value)
         {
-            modbusMaster.WriteSingleRegister(slaveAddress,address, value);
+            modbusMaster.WriteSingleRegister(slaveAddress, address, value);
         }
     }
 }

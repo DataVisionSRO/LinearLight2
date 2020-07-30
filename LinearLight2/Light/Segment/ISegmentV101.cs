@@ -10,8 +10,8 @@ namespace LinearLight2.Light.Segment
         bool LedOverheatFlag { get; }
         bool FanEnable { get; set; }
         bool SwTrigger { get; set; }
-        int ProtocolVersion { get; }
-        int SoftwareVersion { get; }
+        string ProtocolVersion { get; }
+        string SoftwareVersion { get; }
         int HardwareVersion { get; }
         string SerialNumber { get; }
         string ProductNumber { get; }

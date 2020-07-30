@@ -31,40 +31,37 @@ namespace LinearLight2
             T returnLight;
             switch (protocol)
             {
-                case 0x101:
+                case LinearLightV101.CompatibleProtocolVersion:
                     returnLight = new LinearLightV101(master, segments) as T ??
                                   throw new InvalidCastException(
                                       $"{typeof(LinearLightV101)} does not implement {typeof(T)}.");
                     break;
-                case 0x102:
+                case LinearLightV102.CompatibleProtocolVersion:
                     returnLight = new LinearLightV102(master, segments) as T ??
                                   throw new InvalidCastException(
                                       $"{typeof(LinearLightV102)} does not implement {typeof(T)}.");
                     break;
-                case 0x103:
+                case LinearLightV103.CompatibleProtocolVersion:
                     returnLight = new LinearLightV103(master, segments) as T ??
                                   throw new InvalidCastException(
                                       $"{typeof(LinearLightV103)} does not implement {typeof(T)}.");
                     break;
                 default:
-                    if (HasMajorVersion(protocol, 1))
-                    {
-                        returnLight = new LinearLightV103(master, segments) as T ??
-                                      throw new InvalidCastException(
-                                          $"{typeof(LinearLightV103)} does not implement {typeof(T)}.");
-                        break;
-                    }
-
-                    throw new Exception("Unsupported protocol.");
+                    if (MajorVersion(protocol) != MajorVersion(LinearLightV103.CompatibleProtocolVersion))
+                        throw new Exception("Unsupported protocol.");
+                    returnLight = new LinearLightV103(master, segments) as T ??
+                                  throw new InvalidCastException(
+                                      $"{typeof(LinearLightV103)} does not implement {typeof(T)}.");
+                    break;
             }
 
             master.MillisecondsDelayBetweenTransmits = returnLight.MillisecondsBetweenTransmits;
             return returnLight;
         }
 
-        private bool HasMajorVersion(int protocol, int majorVersion)
+        private string MajorVersion(string protocolVersion)
         {
-            return (protocol & 0xFF00) == (majorVersion << 8);
+            return protocolVersion.Split('.')[0];
         }
 
         private int GetSegmentCount()
@@ -74,7 +71,7 @@ namespace LinearLight2
             return segmentCount;
         }
 
-        private int GetProtocol()
+        private string GetProtocol()
         {
             var protocolVersion = IdentificationLiLi.Segments[0].ProtocolVersion;
             return protocolVersion;
