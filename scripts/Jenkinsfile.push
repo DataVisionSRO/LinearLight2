@@ -1,12 +1,12 @@
 pipeline {
     agent {
-        label 'windows && dotnet'
-    }
-    environment {
-       RUNTIME = 'dotnet'
+        label 'windows && dotnet && jenkins01'
     }
     options {
         timestamps()
+    }
+    environment{
+        RUNTIME = 'dotnet'
     }
     stages {
         stage ('push'){
@@ -72,8 +72,8 @@ pipeline {
                         }
                         stage('build') {
                             steps {
-                                bat '%RUNTIME% build LinearLight2/LinearLight2.csproj -c Release'
-                                bat '%RUNTIME% build LinearLight2.NModbus/LinearLight2.NModbus.csproj -c Release'
+                                bat 'dotnet build LinearLight2/LinearLight2.csproj -c Release'
+                                bat 'dotnet build LinearLight2.NModbus/LinearLight2.NModbus.csproj -c Release'
                             }
                         }
                         stage('pack') {
