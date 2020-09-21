@@ -43,7 +43,8 @@ pipeline {
                 }
                 stage('analyse') {
                     steps {
-                        bat 'D:/ProgFiles/CommandLineTools/inspectcode.exe -o=code_inspection.xml LinearLight2.sln'
+                        bat 'dotnet tool restore'
+                        bat 'dotnet jb inspectcode -o="code_inspection.xml" LinearLight2.sln'
                         recordIssues failOnError: true, qualityGates: [[threshold: 1, type: 'TOTAL_NORMAL', unstable: true]], tools: [resharperInspectCode(pattern: 'code_inspection.xml')]
                     }
                 }
