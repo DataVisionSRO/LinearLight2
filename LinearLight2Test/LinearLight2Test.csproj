@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <VersionPrefix>3.0.1</VersionPrefix>
-    <VersionSuffix>SNAPSHOT</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>DataVision</Authors>
     <Company>DataVision</Company>
     <Copyright>Datavision</Copyright>
