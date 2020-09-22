@@ -8,6 +8,7 @@
         <Description>LinearLight2 control library</Description>
         <Copyright>Copyright (C) 2020 DataVision s.r.o. All rights reserved.</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/DataVisionSRO/LinearLight2</PackageProjectUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
