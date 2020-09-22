@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>3.0.2</VersionPrefix>
-    <VersionSuffix>SNAPSHOT</VersionSuffix>
-    <Authors>DataVision</Authors>
-    <Company>DataVision</Company>
-    <Description>LinearLight2 control library</Description>
-    <Copyright>DataVision</Copyright>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <VersionPrefix>3.0.2</VersionPrefix>
+        <VersionSuffix>SNAPSHOT</VersionSuffix>
+        <Authors>DataVision</Authors>
+        <Company>DataVision</Company>
+        <Description>LinearLight2 control library</Description>
+        <Copyright>Copyright (C) 2020 DataVision s.r.o. All rights reserved.</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors/>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <DebugType>full</DebugType>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors/>
+        <DebugType>full</DebugType>
+    </PropertyGroup>
 </Project>
