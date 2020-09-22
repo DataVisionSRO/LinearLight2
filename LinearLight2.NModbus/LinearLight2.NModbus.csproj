@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <VersionPrefix>3.0.2</VersionPrefix>
-        <VersionSuffix>SNAPSHOT</VersionSuffix>
+        <VersionSuffix></VersionSuffix>
         <Authors>DataVision</Authors>
         <Company>DataVision</Company>
         <Description>LinearLight2 library to communicate using NModbus package.</Description>

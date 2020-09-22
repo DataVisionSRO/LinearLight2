@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <VersionPrefix>3.0.2</VersionPrefix>
-        <VersionSuffix>SNAPSHOT</VersionSuffix>
+        <VersionSuffix></VersionSuffix>
         <Authors>DataVision</Authors>
         <Company>DataVision</Company>
         <Copyright>Copyright (C) 2020 DataVision s.r.o. All rights reserved.</Copyright>
