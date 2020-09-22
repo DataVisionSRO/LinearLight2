@@ -79,10 +79,10 @@ pipeline {
                         }
                         stage('pack') {
                             steps {
-                                bat '%RUNTIME% pack LinearLight2/LinearLight2.csproj --configuration Release --include-source '
-                                bat '%RUNTIME% nuget push LinearLight2\\bin\\Release\\LinearLight2*symbols.nupkg --source NetReleases'
-                                bat '%RUNTIME% pack LinearLight2.NModbus/LinearLight2.NModbus.csproj --configuration Release --include-source '
-                                bat '%RUNTIME% nuget push LinearLight2.NModbus\\bin\\Release\\LinearLight2.NModbus*symbols.nupkg --source NetReleases'
+                                bat '%RUNTIME% pack LinearLight2/LinearLight2.csproj --configuration Release'
+                                bat '%RUNTIME% nuget push LinearLight2\\bin\\Release\\LinearLight2*.nupkg --source nuget.org'
+                                bat '%RUNTIME% pack LinearLight2.NModbus/LinearLight2.NModbus.csproj --configuration Release'
+                                bat '%RUNTIME% nuget push LinearLight2.NModbus\\bin\\Release\\LinearLight2.NModbus*.nupkg --source nuget.org'
                             }
                         }
                     }
