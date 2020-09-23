@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <VersionPrefix>3.0.3</VersionPrefix>
-        <VersionSuffix>SNAPSHOT</VersionSuffix>
+        <VersionPrefix>3.1.0</VersionPrefix>
+        <VersionSuffix></VersionSuffix>
         <Authors>DataVision</Authors>
         <Company>DataVision</Company>
         <Description>LinearLight2 control library</Description>
